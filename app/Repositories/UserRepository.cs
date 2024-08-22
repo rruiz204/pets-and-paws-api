@@ -1,6 +1,6 @@
+using Pets_And_Paws_Api.App.Models;
 using Microsoft.EntityFrameworkCore;
 using Pets_And_Paws_Api.App.Database;
-using Pets_And_Paws_Api.App.Models;
 using Pets_And_Paws_Api.App.Repositories.Interfaces;
 
 namespace Pets_And_Paws_Api.App.Repositories;
