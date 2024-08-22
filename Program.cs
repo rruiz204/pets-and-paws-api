@@ -1,3 +1,8 @@
+using Microsoft.EntityFrameworkCore;
+using Pets_And_Paws_Api.App.Database;
+using Pets_And_Paws_Api.App.Repositories;
+using Pets_And_Paws_Api.App.Repositories.Interfaces;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,6 +12,13 @@ builder.Services.AddSwaggerGen();
 
 // Controllers
 builder.Services.AddControllers();
+
+// Database Context
+builder.Services.AddDbContext<DatabaseContext>(opts => 
+    opts.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQL")));
+
+// Repositories
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 
