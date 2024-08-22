@@ -2,11 +2,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Pets_And_Paws_Api.App.Models;
 
-public class User
+public class User : BaseModel
 {
-  [Key]
-  public int Id { get; set; }
-
   [Required]
   [StringLength(50)]
   public string FirstName { get; set; }
@@ -27,7 +24,4 @@ public class User
   [Required]
   [StringLength(9)]
   public string PhoneNumber { get; set; }
-
-  public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-  public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 }
