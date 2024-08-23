@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Pets_And_Paws_Api.App.Configuration;
 using Pets_And_Paws_Api.App.Database;
 using Pets_And_Paws_Api.App.Repositories;
 using Pets_And_Paws_Api.App.Repositories.Interfaces;
@@ -34,6 +35,9 @@ builder.Services.AddScoped<ITokens, Tokens>();
 
 // Auto Mapper
 builder.Services.AddAutoMapper(typeof(Program));
+
+// Authentication & Authorization
+builder.Services.AddJwtAuthentication(builder.Configuration);
 
 var app = builder.Build();
 
