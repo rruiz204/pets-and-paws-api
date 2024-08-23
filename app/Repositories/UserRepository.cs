@@ -32,4 +32,11 @@ public class UserRepository(DatabaseContext context) : IUserRepository
     await _context.SaveChangesAsync();
     return await GetUser(user.Id);
   }
+
+  public async Task<User?> FindUser(User user)
+  {
+    return await _context.User.FirstOrDefaultAsync(
+      u => u.Email == user.Email || u.FirstName == user.FirstName
+    );
+  }
 }

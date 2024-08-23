@@ -8,4 +8,5 @@ public interface IUserRepository
   Task<User> GetUser(int id);
   Task<User> CreateUser(User user);
   Task<User> UpdateUser(User user);
+  Task<User?> FindUser(User user);
 }
