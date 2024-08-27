@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Pets_And_Paws_Api.App.Configuration;
+using Pets_And_Paws_Api.App.Infrastructure.Configuration;
 using Pets_And_Paws_Api.App.Infrastructure.Database;
 using Pets_And_Paws_Api.App.Infrastructure.Repositories;
 using Pets_And_Paws_Api.App.Domain.Repositories;
