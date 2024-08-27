@@ -1,12 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using Pets_And_Paws_Api.App.Configuration;
-using Pets_And_Paws_Api.App.Database;
-using Pets_And_Paws_Api.App.Repositories;
-using Pets_And_Paws_Api.App.Repositories.Interfaces;
-using Pets_And_Paws_Api.App.Services;
-using Pets_And_Paws_Api.App.Services.Interfaces;
-using Pets_And_Paws_Api.App.Utilities;
-using Pets_And_Paws_Api.App.Utilities.Interfaces;
+using Pets_And_Paws_Api.App.Infrastructure.Database;
+using Pets_And_Paws_Api.App.Infrastructure.Repositories;
+using Pets_And_Paws_Api.App.Domain.Repositories;
+using Pets_And_Paws_Api.App.Application.Services;
+using Pets_And_Paws_Api.App.Domain.Services;
+using Pets_And_Paws_Api.App.Infrastructure.Utilities;
+using Pets_And_Paws_Api.App.Domain.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
 
