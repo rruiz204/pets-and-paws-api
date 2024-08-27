@@ -24,7 +24,7 @@ public class AuthService(
     {
       throw new ArgumentException("This credentials are not available");
     }
-    dto.Password = _encrypt.Hash(dto.Password);
+    user.Password = _encrypt.Hash(dto.Password);
     return await _userRepository.CreateUser(user);
   }
 
