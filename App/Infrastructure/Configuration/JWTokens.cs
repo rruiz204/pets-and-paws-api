@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace Pets_And_Paws_Api.App.Configuration;
+namespace Pets_And_Paws_Api.App.Infrastructure.Configuration;
 
 public static class JWTokens
 {
