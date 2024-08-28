@@ -27,13 +27,14 @@ public class BaseRepository<TEntity>(DatabaseContext context) : IBaseRepository<
 
   public async Task<TEntity?> FindAsync(Expression<Func<TEntity, bool>> predicate)
   {
-    return await dbSet.Where(predicate).FirstAsync();
+    return await dbSet.Where(predicate).FirstOrDefaultAsync();
   }
 
-  public async Task CreateAsync(TEntity entity)
+  public async Task<TEntity> CreateAsync(TEntity entity)
   {
     await dbSet.AddAsync(entity);
     await _context.SaveChangesAsync();
+    return entity;
   }
 
   public async Task DeleteAsync(TEntity entity)
@@ -42,9 +43,10 @@ public class BaseRepository<TEntity>(DatabaseContext context) : IBaseRepository<
     await _context.SaveChangesAsync();
   }
 
-  public async Task UpdateAsync(TEntity entity)
+  public async Task<TEntity> UpdateAsync(TEntity entity)
   {
     dbSet.Update(entity);
     await _context.SaveChangesAsync();
+    return entity;
   }
 }

@@ -8,7 +8,7 @@ public interface IBaseRepository<T> where T : class
   Task<List<T>> FindAllAsync(Expression<Func<T, bool>> predicate);
   Task<T?> GetAsync(int id);
   Task<T?> FindAsync(Expression<Func<T, bool>> predicate);
-  Task CreateAsync(T entity);
+  Task<T> CreateAsync(T entity);
   Task DeleteAsync(T entity);
-  Task UpdateAsync(T entity);
+  Task<T> UpdateAsync(T entity);
 }
