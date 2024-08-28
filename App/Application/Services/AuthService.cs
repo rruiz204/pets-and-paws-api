@@ -20,20 +20,22 @@ public class AuthService(
   public async Task<User> RegisterUser(RegisterUserDTO dto)
   {
     User user = _mapper.Map<User>(dto);
-    if (await _userRepository.FindUser(user) != null)
+    if (await _userRepository.FindToValidRegister(user) != null)
     {
       throw new ArgumentException("This credentials are not available");
     }
     user.Password = _encrypt.Hash(dto.Password);
-    return await _userRepository.CreateUser(user);
+    return await _userRepository.CreateAsync(user);
   }
 
   public async Task<User> LoginUser(LoginUserDTO dto)
   {
-    User? existingUser = await _userRepository.FindUser(_mapper.Map<User>(dto));
-    if (existingUser == null) throw new ArgumentException("This user does not exist");
-    
-    if(!_encrypt.Verify(existingUser.Password, dto.Password)) throw new ArgumentException("Invalid Credentials");
+    User? existingUser = await _userRepository.FindAsync(u => u.Email == dto.Email)
+      ?? throw new ArgumentException("This user does not exist");
+    if (!_encrypt.Verify(existingUser.Password, dto.Password))
+    {
+      throw new ArgumentException("Invalid Credentials");
+    }
     return existingUser;
   }
 }
