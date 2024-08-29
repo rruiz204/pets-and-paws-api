@@ -1,12 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using Pets_And_Paws_Api.App.Infrastructure.Configuration;
 using Pets_And_Paws_Api.App.Infrastructure.Database;
-using Pets_And_Paws_Api.App.Infrastructure.Repositories;
-using Pets_And_Paws_Api.App.Domain.Repositories;
 using Pets_And_Paws_Api.App.Application.Services;
 using Pets_And_Paws_Api.App.Domain.Services;
 using Pets_And_Paws_Api.App.Infrastructure.Utilities;
 using Pets_And_Paws_Api.App.Domain.Utilities;
+using Pets_And_Paws_Api.App.Infrastructure.UnitOfWork;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,9 +24,8 @@ builder.Services.AddDbContext<DatabaseContext>(opts =>
 // Services
 builder.Services.AddScoped<IAuthService, AuthService>();
 
-// Repositories
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IResetTokenRepository, ResetTokenRepository>();
+// Unit of Work
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Utilities
 builder.Services.AddScoped<IEncrypt, Encrypt>();
