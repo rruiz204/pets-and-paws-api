@@ -7,7 +7,10 @@ namespace Pets_And_Paws_Api.App.Infrastructure.UnitOfWork;
 public class UnitOfWork(DatabaseContext context) : IUnitOfWork
 {
   private readonly DatabaseContext _context = context;
-  private IUserRepository? _users;
 
+  private IUserRepository? _users;
   public IUserRepository Users => _users ??= new UserRepository(_context);
+
+  private IResetTokenRepository? _tokens;
+  public IResetTokenRepository Tokens => _tokens ??= new ResetTokenRepository(_context);
 }
