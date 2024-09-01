@@ -1,5 +1,6 @@
 using AutoMapper;
 using Pets_And_Paws_Api.App.Application.DTOs.Auth;
+using Pets_And_Paws_Api.App.Application.DTOs.Passwd;
 using Pets_And_Paws_Api.App.Domain.Models;
 using Pets_And_Paws_Api.App.Domain.Services;
 using Pets_And_Paws_Api.App.Domain.Utilities;
@@ -38,4 +39,24 @@ public class AuthService(
     }
     return existingUser;
   }
+
+  public async Task SendRecoveryEmail(ForgetPasswordDTO dto)
+  {
+    User? existingUser = await _unitOfWork.Users.FindAsync(u => u.Email == dto.Email)
+      ?? throw new ArgumentException("This user does not exist");
+    await _unitOfWork.Tokens.CreateResetToken(_mapper.Map<ResetToken>(dto));
+  }
+
+  public async Task ResetPassword(ResetPasswordDTO dto)
+  {
+    ResetToken? validToken = await _unitOfWork.Tokens.FindValidToken(dto.Token)
+      ?? throw new ArgumentException("Invalid or expired token");
+    
+    User? existingUser = await _unitOfWork.Users.FindAsync(u => u.Email == validToken.Email)
+      ?? throw new ArgumentException("This user does not exist");
+    
+    existingUser.Password = _encrypt.Hash(dto.Password);
+    await _unitOfWork.Users.UpdateAsync(existingUser);
+    await _unitOfWork.Tokens.DeleteResetToken(validToken);
+    }
 }
