@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Pets_And_Paws_Api.App.Application.DTOs.Auth;
+using Pets_And_Paws_Api.App.Application.DTOs.Passwd;
 using Pets_And_Paws_Api.App.Domain.Models;
 using Pets_And_Paws_Api.App.Domain.Services;
 using Pets_And_Paws_Api.App.Domain.Utilities;
@@ -30,5 +31,19 @@ public class AuthController(
   {
     User loggedUser = await _authService.LoginUser(dto);
     return Ok(new AuthResponseDTO(_tokens.Generate(loggedUser)));
+  }
+
+  [HttpPost("Forget")]
+  public async Task<IActionResult> Forget([FromBody] ForgetPasswordDTO dto)
+  {
+    await _authService.SendRecoveryEmail(dto);
+    return Ok(new { message = "email sended!" });
+  }
+
+  [HttpPost("Reset")]
+  public async Task<IActionResult> Reset([FromBody] ResetPasswordDTO dto)
+  {
+    await _authService.ResetPassword(dto);
+    return Ok(new { message = "password updated!" });
   }
 }
