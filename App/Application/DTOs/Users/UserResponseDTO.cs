@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace Pets_And_Paws_Api.App.Application.DTOs.Users;
 
 public class UserResponseDTO
