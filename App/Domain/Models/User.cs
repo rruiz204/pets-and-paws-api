@@ -24,4 +24,7 @@ public class User : BaseModel
   [Required]
   [StringLength(9)]
   public string PhoneNumber { get; set; } = string.Empty;
+
+  public int RoleId { get; set; }
+  public Role Role { get; set; }
 }
