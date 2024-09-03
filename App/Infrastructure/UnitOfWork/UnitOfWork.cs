@@ -13,4 +13,7 @@ public class UnitOfWork(DatabaseContext context) : IUnitOfWork
 
   private IResetTokenRepository? _tokens;
   public IResetTokenRepository Tokens => _tokens ??= new ResetTokenRepository(_context);
+
+  private IRoleRepository? _roles;
+  public IRoleRepository Roles => _roles ??= new RoleRepository(_context);
 }
