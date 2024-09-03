@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Pets_And_Paws_Api.App.Infrastructure.Configuration;
 
-public static class JWTokens
+public static class AuthTokens
 {
   public static void AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
   {
