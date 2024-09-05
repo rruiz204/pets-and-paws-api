@@ -10,5 +10,5 @@ public class Role : BaseModel
   public string Name { get; set; } = string.Empty;
 
   public ICollection<User> Users { get; set; }
-  public ICollection<RolePermission> Permissions { get; set; }
+  public ICollection<RoleScope> Scopes { get; set; }
 }

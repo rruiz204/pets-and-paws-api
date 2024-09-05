@@ -8,9 +8,8 @@ public class User : BaseModel
   [StringLength(50)]
   public string FirstName { get; set; } = string.Empty;
 
-  [Required]
   [StringLength(50)]
-  public string LastName { get; set; } = string.Empty;
+  public string? LastName { get; set; } = string.Empty;
 
   [Required]
   [EmailAddress]
@@ -21,9 +20,8 @@ public class User : BaseModel
   [MinLength(8)]
   public string Password { get; set; } = string.Empty;
 
-  [Required]
   [StringLength(9)]
-  public string PhoneNumber { get; set; } = string.Empty;
+  public string? PhoneNumber { get; set; } = string.Empty;
 
   public int RoleId { get; set; }
   public Role Role { get; set; }
