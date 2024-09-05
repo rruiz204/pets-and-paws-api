@@ -9,6 +9,10 @@ public class Role : BaseModel
   [StringLength(20)]
   public string Name { get; set; } = string.Empty;
 
-  public ICollection<User> Users { get; set; }
-  public ICollection<RoleScope> Scopes { get; set; }
+  [Required]
+  [StringLength(150)]
+  public string Description { get; set; } = string.Empty;
+
+  public ICollection<User> Users { get; set; } = [];
+  public ICollection<RoleScope> Scopes { get; set; } = [];
 }

@@ -9,5 +9,10 @@ public class Scope : BaseModel
   [MinLength(10)]
   [MaxLength(30)]
   public string Name { get; set; } = string.Empty;
-  public ICollection<RoleScope> Roles { get; set; }
+
+  [Required]
+  [StringLength(150)]
+  public string Description { get; set; } = string.Empty;
+  
+  public ICollection<RoleScope> Roles { get; set; } = [];
 }
