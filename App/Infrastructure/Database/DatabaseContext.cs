@@ -10,12 +10,13 @@ public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbCont
   public DbSet<User> User { get; set; }
   public DbSet<Role> Role { get; set; }
   public DbSet<ResetToken> ResetToken { get; set; }
-  public DbSet<Permission> Permission { get; set; }
+  public DbSet<Scope> Scopes { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
         
-        modelBuilder.ApplyConfiguration(new RolePermissionConfig());
-        modelBuilder.ApplyConfiguration(new PermissionSeed());
+        modelBuilder.ApplyConfiguration(new RoleScopeConfig());
+        /* 
+        modelBuilder.ApplyConfiguration(new PermissionSeed()); */
     }
 }
