@@ -10,10 +10,10 @@ public class PermissionSeed : IEntityTypeConfiguration<Scope>
   {
     builder.HasData(
       /* User Modele Scopes */
-      new Scope() { Id = 1, Name = "user:read" },
-      new Scope() { Id = 2, Name = "user:write" },
-      new Scope() { Id = 3, Name = "user:update" },
-      new Scope() { Id = 4, Name = "user:delete" }
+      new Scope() { Id = 1, Name = "user:read", Description = "Allows you to read user information" },
+      new Scope() { Id = 2, Name = "user:write", Description = "Allows you to create new user records" },
+      new Scope() { Id = 3, Name = "user:update", Description = "Allows modification of existing user information" },
+      new Scope() { Id = 4, Name = "user:delete", Description = "Allows deletion of user records" }
     );
   }
 }

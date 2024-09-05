@@ -15,8 +15,10 @@ public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbCont
     {
         base.OnModelCreating(modelBuilder);
         
+        // Relationships
         modelBuilder.ApplyConfiguration(new RoleScopeConfig());
-        /* 
-        modelBuilder.ApplyConfiguration(new PermissionSeed()); */
+
+        // Seeders
+        modelBuilder.ApplyConfiguration(new PermissionSeed());
     }
 }
