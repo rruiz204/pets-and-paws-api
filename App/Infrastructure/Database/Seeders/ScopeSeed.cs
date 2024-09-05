@@ -4,7 +4,7 @@ using Pets_And_Paws_Api.App.Domain.Models;
 
 namespace Pets_And_Paws_Api.App.Infrastructure.Database.Seeders;
 
-public class PermissionSeed : IEntityTypeConfiguration<Scope>
+public class ScopeSeed : IEntityTypeConfiguration<Scope>
 {
   public void Configure(EntityTypeBuilder<Scope> builder)
   {
