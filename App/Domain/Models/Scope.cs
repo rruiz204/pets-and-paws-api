@@ -3,8 +3,11 @@ using Pets_And_Paws_Api.App.Domain.Models.Relationships;
 
 namespace Pets_And_Paws_Api.App.Domain.Models;
 
-public class Scope : BaseModel
+public class Scope
 {
+  [Key]
+  public int Id { get; set; }
+
   [Required]
   [MinLength(10)]
   [MaxLength(30)]
