@@ -3,7 +3,7 @@ using Pets_And_Paws_Api.App.Domain.Models.Relationships;
 
 namespace Pets_And_Paws_Api.App.Domain.Models;
 
-public class RoleScope
+public class Role
 {
   [Key]
   public int Id { get; set; }
