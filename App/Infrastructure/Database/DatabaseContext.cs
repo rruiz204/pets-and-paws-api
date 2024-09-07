@@ -11,14 +11,34 @@ public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbCont
   public DbSet<Role> Role { get; set; }
   public DbSet<ResetToken> ResetToken { get; set; }
   public DbSet<Scope> Scopes { get; set; }
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        base.OnModelCreating(modelBuilder);
-        
-        // Relationships
-        modelBuilder.ApplyConfiguration(new RoleScopeConfig());
+  protected override void OnModelCreating(ModelBuilder modelBuilder)
+  {
+    base.OnModelCreating(modelBuilder);
 
-        // Seeders
-        modelBuilder.ApplyConfiguration(new PermissionSeed());
+    foreach (var entity in modelBuilder.Model.GetEntityTypes()
+      .Where(t => t.ClrType.IsAssignableTo(typeof(BaseModel))))
+    {
+      modelBuilder.Entity(entity.Name)
+        .Property("CreatedAt")
+        .HasDefaultValueSql("NOW()")
+        .ValueGeneratedOnAdd();
+
+      modelBuilder.Entity(entity.Name)
+        .Property("UpdatedAt")
+        .HasDefaultValueSql("NOW()")
+        .ValueGeneratedOnAdd();
     }
+
+    // Relationships
+    modelBuilder.ApplyConfiguration(new RoleScopeConfig());
+
+    // Seeders
+    modelBuilder.ApplyConfiguration(new ScopeSeed());
+    modelBuilder.ApplyConfiguration(new RoleSeed());
+
+    // Create Admin
+    modelBuilder.Entity<User>().HasData(
+      new User() { Id = 1, FirstName = "admin", Email = "admin@admin.com", Password = "12345678", RoleId = 1 }
+    );
+  }
 }
