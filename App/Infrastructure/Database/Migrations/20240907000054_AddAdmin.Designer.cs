@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Pets_And_Paws_Api.App.Infrastructure.Database;
@@ -11,9 +12,11 @@ using Pets_And_Paws_Api.App.Infrastructure.Database;
 namespace pets_and_paws_api.App.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240907000054_AddAdmin")]
+    partial class AddAdmin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +37,7 @@ namespace pets_and_paws_api.App.Infrastructure.Database.Migrations
 
                     b.HasIndex("PermissionId");
 
-                    b.ToTable("RoleScope", (string)null);
+                    b.ToTable("RoleScope");
                 });
 
             modelBuilder.Entity("Pets_And_Paws_Api.App.Domain.Models.ResetToken", b =>
@@ -69,7 +72,7 @@ namespace pets_and_paws_api.App.Infrastructure.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ResetToken", (string)null);
+                    b.ToTable("ResetToken");
                 });
 
             modelBuilder.Entity("Pets_And_Paws_Api.App.Domain.Models.Role", b =>
@@ -92,7 +95,7 @@ namespace pets_and_paws_api.App.Infrastructure.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Role", (string)null);
+                    b.ToTable("Role");
 
                     b.HasData(
                         new
@@ -123,7 +126,7 @@ namespace pets_and_paws_api.App.Infrastructure.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Scopes", (string)null);
+                    b.ToTable("Scopes");
 
                     b.HasData(
                         new
@@ -199,7 +202,7 @@ namespace pets_and_paws_api.App.Infrastructure.Database.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("User", (string)null);
+                    b.ToTable("User");
 
                     b.HasData(
                         new
