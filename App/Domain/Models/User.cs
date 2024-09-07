@@ -24,5 +24,5 @@ public class User : BaseModel
   public string? PhoneNumber { get; set; } = string.Empty;
 
   public int RoleId { get; set; }
-  public Role Role { get; set; } = new();
+  public Role? Role { get; set; }
 }
