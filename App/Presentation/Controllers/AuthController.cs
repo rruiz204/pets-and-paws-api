@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using Pets_And_Paws_Api.App.Application.DTOs.Auth;
-using Pets_And_Paws_Api.App.Application.DTOs.Passwd;
+using Pets_And_Paws_Api.App.Application.DTOs.Requests.Auth;
+using Pets_And_Paws_Api.App.Application.DTOs.Requests.Passwd;
+using Pets_And_Paws_Api.App.Application.DTOs.Entities;
 using Pets_And_Paws_Api.App.Domain.Models;
 using Pets_And_Paws_Api.App.Domain.Services;
 using Pets_And_Paws_Api.App.Domain.Utilities;
@@ -23,14 +24,14 @@ public class AuthController(
   public async Task<IActionResult> Register([FromBody] RegisterUserDTO dto)
   {
     User registeredUser = await _authService.RegisterUser(dto);
-    return Ok(new AuthResponseDTO(_tokens.Generate(registeredUser)));
+    return Ok(new AuthDTO(_tokens.Generate(registeredUser)));
   }
 
   [HttpPost("Login")]
   public async Task<IActionResult> Login([FromBody] LoginUserDTO dto)
   {
     User loggedUser = await _authService.LoginUser(dto);
-    return Ok(new AuthResponseDTO(_tokens.Generate(loggedUser)));
+    return Ok(new AuthDTO(_tokens.Generate(loggedUser)));
   }
 
   [HttpPost("Forget")]
