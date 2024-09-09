@@ -11,6 +11,7 @@ public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbCont
   public DbSet<Role> Role { get; set; }
   public DbSet<ResetToken> ResetToken { get; set; }
   public DbSet<Scope> Scopes { get; set; }
+  
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     base.OnModelCreating(modelBuilder);
@@ -29,12 +30,12 @@ public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbCont
         .ValueGeneratedOnAdd();
     }
 
-    // Relationships
-    modelBuilder.ApplyConfiguration(new RoleScopeConfig());
-
     // Seeders
     modelBuilder.ApplyConfiguration(new ScopeSeed());
     modelBuilder.ApplyConfiguration(new RoleSeed());
+
+    // Relationships
+    modelBuilder.ApplyConfiguration(new RoleScopeConfig());
 
     // Create Admin
     modelBuilder.Entity<User>().HasData(
