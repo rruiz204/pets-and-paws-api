@@ -1,7 +1,8 @@
 using AutoMapper;
 using Pets_And_Paws_Api.App.Domain.Models;
+using Pets_And_Paws_Api.App.Application.DTOs.Requests.Passwd;
 
-namespace Pets_And_Paws_Api.App.Application.DTOs.Passwd;
+namespace Pets_And_Paws_Api.App.Application.DTOs.Profiles;
 
 public class PasswdProfile : Profile
 {

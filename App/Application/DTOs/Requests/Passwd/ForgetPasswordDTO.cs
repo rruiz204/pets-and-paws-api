@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Pets_And_Paws_Api.App.Application.DTOs.Passwd;
+namespace Pets_And_Paws_Api.App.Application.DTOs.Requests.Passwd;
 
 public class ForgetPasswordDTO
 {

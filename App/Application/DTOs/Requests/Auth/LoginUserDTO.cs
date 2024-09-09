@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Pets_And_Paws_Api.App.Application.DTOs.Auth;
+namespace Pets_And_Paws_Api.App.Application.DTOs.Requests.Auth;
 
 public class LoginUserDTO
 {
