@@ -1,5 +1,5 @@
-using Pets_And_Paws_Api.App.Application.DTOs.Auth;
-using Pets_And_Paws_Api.App.Application.DTOs.Passwd;
+using Pets_And_Paws_Api.App.Application.DTOs.Requests.Auth;
+using Pets_And_Paws_Api.App.Application.DTOs.Requests.Passwd;
 using Pets_And_Paws_Api.App.Domain.Models;
 
 namespace Pets_And_Paws_Api.App.Domain.Services;
