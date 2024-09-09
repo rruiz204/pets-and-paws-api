@@ -8,7 +8,7 @@ public class RoleScopeConfig : IEntityTypeConfiguration<RoleScope>
 {
   public void Configure(EntityTypeBuilder<RoleScope> builder)
   {
-    builder.HasKey(rp => new { rp.RoleId, rp.PermissionId });
+    builder.HasKey(rp => new { rp.RoleId, rp.ScopeId });
 
     builder.HasOne(rp => rp.Role)
       .WithMany(r => r.Scopes)
@@ -16,6 +16,11 @@ public class RoleScopeConfig : IEntityTypeConfiguration<RoleScope>
 
     builder.HasOne(rp => rp.Scope)
       .WithMany(p => p.Roles)
-      .HasForeignKey(rp => rp.PermissionId);
+      .HasForeignKey(rp => rp.ScopeId);
+
+    builder.HasData(
+      new RoleScope { RoleId = 1, ScopeId = 1 }, new RoleScope { RoleId = 1, ScopeId = 2 },
+      new RoleScope { RoleId = 1, ScopeId = 3 }, new RoleScope { RoleId = 1, ScopeId = 4 }
+    );
   }
 }
