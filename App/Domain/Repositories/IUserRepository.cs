@@ -1,4 +1,4 @@
-using Pets_And_Paws_Api.App.Application.DTOs.Entities;
+using Pets_And_Paws_Api.App.Application.DTOs.Responses.User;
 using Pets_And_Paws_Api.App.Domain.Models;
 
 namespace Pets_And_Paws_Api.App.Domain.Repositories;

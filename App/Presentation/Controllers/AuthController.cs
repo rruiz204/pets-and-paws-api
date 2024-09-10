@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Pets_And_Paws_Api.App.Application.DTOs.Requests.Auth;
+using Pets_And_Paws_Api.App.Application.DTOs.Responses.Auth;
 using Pets_And_Paws_Api.App.Application.DTOs.Requests.Passwd;
-using Pets_And_Paws_Api.App.Application.DTOs.Entities;
 using Pets_And_Paws_Api.App.Domain.Models;
 using Pets_And_Paws_Api.App.Domain.Services;
 using Pets_And_Paws_Api.App.Domain.Utilities;

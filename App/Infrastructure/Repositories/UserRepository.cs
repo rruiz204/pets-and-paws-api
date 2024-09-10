@@ -3,7 +3,7 @@ using Pets_And_Paws_Api.App.Domain.Models;
 using Pets_And_Paws_Api.App.Infrastructure.Database;
 using Pets_And_Paws_Api.App.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Pets_And_Paws_Api.App.Application.DTOs.Entities;
+using Pets_And_Paws_Api.App.Application.DTOs.Responses.User;
 
 namespace Pets_And_Paws_Api.App.Infrastructure.Repositories;
 

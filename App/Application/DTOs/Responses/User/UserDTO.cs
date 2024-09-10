@@ -1,4 +1,4 @@
-namespace Pets_And_Paws_Api.App.Application.DTOs.Entities;
+namespace Pets_And_Paws_Api.App.Application.DTOs.Responses.User;
 
 public class UserDTO
 {

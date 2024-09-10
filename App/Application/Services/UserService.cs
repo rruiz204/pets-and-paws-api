@@ -1,6 +1,6 @@
 using AutoMapper;
 using Pets_And_Paws_Api.App.Domain.Services;
-using Pets_And_Paws_Api.App.Application.DTOs.Entities;
+using Pets_And_Paws_Api.App.Application.DTOs.Responses.User;
 using Pets_And_Paws_Api.App.Infrastructure.UnitOfWork;
 
 namespace Pets_And_Paws_Api.App.Application.Services;
