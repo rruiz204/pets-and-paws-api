@@ -1,8 +1,8 @@
-using Pets_And_Paws_Api.App.Application.DTOs.Entities;
+using Pets_And_Paws_Api.App.Domain.Models;
 
 namespace Pets_And_Paws_Api.App.Domain.Services;
 
 public interface IRoleService
 {
-  Task<List<RoleDTO>> GetAllAsync();
+  Task<List<Role>> GetAllAsync();
 }

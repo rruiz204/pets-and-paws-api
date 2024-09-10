@@ -1,17 +1,15 @@
-using AutoMapper;
 using Pets_And_Paws_Api.App.Domain.Services;
-using Pets_And_Paws_Api.App.Application.DTOs.Entities;
 using Pets_And_Paws_Api.App.Infrastructure.UnitOfWork;
+using Pets_And_Paws_Api.App.Domain.Models;
 
 namespace Pets_And_Paws_Api.App.Application.Services;
 
-public class RoleService(IUnitOfWork unitOfWork, IMapper mapper) : IRoleService
+public class RoleService(IUnitOfWork unitOfWork) : IRoleService
 {
   private readonly IUnitOfWork _unitOfWork = unitOfWork;
-  private readonly IMapper _mapper = mapper;
 
-  public async Task<List<RoleDTO>> GetAllAsync()
+  public async Task<List<Role>> GetAllAsync()
   {
-    return _mapper.Map<List<RoleDTO>>(await _unitOfWork.Roles.GetAllAsync());
+    return await _unitOfWork.Roles.GetAllRolesAsync();
   }
 }

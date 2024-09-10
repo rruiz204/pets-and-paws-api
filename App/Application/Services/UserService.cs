@@ -1,14 +1,12 @@
-using AutoMapper;
 using Pets_And_Paws_Api.App.Domain.Services;
 using Pets_And_Paws_Api.App.Application.DTOs.Responses.User;
 using Pets_And_Paws_Api.App.Infrastructure.UnitOfWork;
 
 namespace Pets_And_Paws_Api.App.Application.Services;
 
-public class UserService(IUnitOfWork unitOfWork, IMapper mapper) : IUserService
+public class UserService(IUnitOfWork unitOfWork) : IUserService
 {
   private readonly IUnitOfWork _unitOfWork = unitOfWork;
-  private readonly IMapper _mapper = mapper;
 
   public async Task<List<UserDTO>> GetAllAsync()
   {
@@ -17,6 +15,6 @@ public class UserService(IUnitOfWork unitOfWork, IMapper mapper) : IUserService
 
   public async Task<UserDTO?> GetAsync(int id) 
   {
-    return _mapper.Map<UserDTO>(await _unitOfWork.Users.GetAsync(id));
+    return await _unitOfWork.Users.GetUserAsync(id);
   }
 }
