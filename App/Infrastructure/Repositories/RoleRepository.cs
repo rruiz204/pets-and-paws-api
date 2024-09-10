@@ -9,7 +9,7 @@ public class RoleRepository(DatabaseContext context) : IRoleRepository
 {
   private readonly DatabaseContext _context = context;
 
-  public async Task<List<Role>> GetAllAsync()
+  public async Task<List<Role>> GetAllRolesAsync()
   {
     return await _context.Role.ToListAsync();
   }

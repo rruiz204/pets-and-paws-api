@@ -4,23 +4,34 @@ using Pets_And_Paws_Api.App.Infrastructure.Database;
 using Pets_And_Paws_Api.App.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Pets_And_Paws_Api.App.Application.DTOs.Responses.User;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 
 namespace Pets_And_Paws_Api.App.Infrastructure.Repositories;
 
-public class UserRepository(DatabaseContext context) : BaseRepository<User>(context), IUserRepository
-{ 
+public class UserRepository(DatabaseContext context, IMapper mapper) : BaseRepository<User>(context), IUserRepository
+{
+  public async Task<List<UserDTO>> GetAllUsersAsync()
+  {
+    return await dbSet.Include(user => user.Role)
+      .ProjectTo<UserDTO>(mapper.ConfigurationProvider).ToListAsync();
+  }
+
+  public async Task<List<UserDTO>> FindAllUserAsync(Expression<Func<User, bool>> predicate)
+  {
+    return await dbSet.Where(predicate)
+      .ProjectTo<UserDTO>(mapper.ConfigurationProvider).ToListAsync();
+  }
+
+  public async Task<UserDTO?> GetUserAsync(int id)
+  {
+    return await dbSet.Include(user => user.Role).Where(u => u.Id == id)
+      .ProjectTo<UserDTO>(mapper.ConfigurationProvider).FirstOrDefaultAsync();
+  }
+
   public async Task<User?> FindToValidRegister(User user)
   {
     Expression<Func<User, bool>> predicate = u => u.Email == user.Email || u.FirstName == user.FirstName;
-    return await FindAsync(predicate);
-  }
-
-  public async Task<List<UserDTO>> GetAllUsersAsync()
-  {
-    return await dbSet.Select(user => new UserDTO {
-      Id = user.Id,
-      FullName = !string.IsNullOrEmpty(user.LastName) ? $"{user.FirstName} {user.LastName}" : user.FirstName,
-      Role = user.Role.Name
-    }).ToListAsync();
+    return await dbSet.Where(predicate).FirstOrDefaultAsync();
   }
 }

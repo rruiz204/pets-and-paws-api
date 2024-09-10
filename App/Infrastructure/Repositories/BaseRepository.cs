@@ -10,16 +10,6 @@ public class BaseRepository<TEntity>(DatabaseContext context) : IBaseRepository<
   protected readonly DatabaseContext _context = context;
   protected readonly DbSet<TEntity> dbSet = context.Set<TEntity>();
 
-  public async Task<List<TEntity>> GetAllAsync()
-  {
-    return await dbSet.ToListAsync();
-  }
-
-  public async Task<List<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> predicate)
-  {
-    return await dbSet.Where(predicate).ToListAsync();
-  }
-
   public async Task<TEntity?> GetAsync(int id)
   {
     return await dbSet.FindAsync(id);

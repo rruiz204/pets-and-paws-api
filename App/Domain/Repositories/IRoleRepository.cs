@@ -4,5 +4,5 @@ namespace Pets_And_Paws_Api.App.Domain.Repositories;
 
 public interface IRoleRepository
 {
-  Task<List<Role>> GetAllAsync();
+  Task<List<Role>> GetAllRolesAsync();
 }
