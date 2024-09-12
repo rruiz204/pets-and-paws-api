@@ -9,5 +9,6 @@ public interface IUserRepository : IBaseRepository<User>
   Task<List<UserDTO>> GetAllUsersAsync();
   Task<List<UserDTO>> FindAllUserAsync(Expression<Func<User, bool>> predicate);
   Task<UserDTO?> GetUserAsync(int id);
+  Task<User?> GetUserWithScopes(int id);
   Task<User?> FindToValidRegister(User user);
 }

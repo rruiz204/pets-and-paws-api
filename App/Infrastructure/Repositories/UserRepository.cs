@@ -11,6 +11,14 @@ namespace Pets_And_Paws_Api.App.Infrastructure.Repositories;
 
 public class UserRepository(DatabaseContext context, IMapper mapper) : BaseRepository<User>(context), IUserRepository
 {
+  public async Task<User?> GetUserWithScopes(int id)
+  {
+    return await dbSet
+      .Include(user => user.Role)
+      .ThenInclude(role => role.Scopes)
+      .Where(user => user.Id == id).FirstOrDefaultAsync();
+  }
+
   public async Task<List<UserDTO>> GetAllUsersAsync()
   {
     return await dbSet.Include(user => user.Role)
