@@ -19,6 +19,7 @@ builder.Services.AddSwaggerGen();
 // Controllers & Filters
 builder.Services.AddControllers(options => {
   options.Filters.Add<LogicExceptionFilter>();
+  options.Filters.Add<FormatResponseFilter>();
 });
 
 // Database Context
