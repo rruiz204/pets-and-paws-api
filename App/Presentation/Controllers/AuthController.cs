@@ -5,13 +5,11 @@ using Pets_And_Paws_Api.App.Application.DTOs.Requests.Passwd;
 using Pets_And_Paws_Api.App.Domain.Models;
 using Pets_And_Paws_Api.App.Domain.Services;
 using Pets_And_Paws_Api.App.Domain.Utilities;
-using Pets_And_Paws_Api.App.Presentation.Filters;
 
 namespace Pets_And_Paws_Api.App.Presentation.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[TypeFilter<ArgumentExceptionFilter>]
 public class AuthController(
   IAuthService authService,
   ITokens tokens
