@@ -43,6 +43,7 @@ builder.Services.AddAutoMapper(typeof(Program));
 
 // Authentication & Authorization
 builder.Services.AddJwtAuthentication(builder.Configuration);
+builder.Services.AddPolicies();
 
 var app = builder.Build();
 
@@ -54,7 +55,5 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseAuthentication();
-app.UseAuthorization();
 app.MapControllers();
 app.Run();
