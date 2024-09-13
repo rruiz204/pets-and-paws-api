@@ -5,14 +5,10 @@ using Pets_And_Paws_Api.App.Infrastructure.Database;
 
 namespace Pets_And_Paws_Api.App.Infrastructure.Repositories;
 
-public class BaseRepository<TEntity>(DatabaseContext context) : IBaseRepository<TEntity> where TEntity : class
+public class GenericRepository<TEntity>(DatabaseContext context) : IGenericRepository<TEntity> where TEntity : class
 {
   protected readonly DatabaseContext _context = context;
   protected readonly DbSet<TEntity> dbSet = context.Set<TEntity>();
-
-  public async Task<List<TEntity>> GetAllAsync() => await dbSet.ToListAsync();
-
-  public async Task<TEntity?> GetAsync(int id) => await dbSet.FindAsync(id);
 
   public async Task<List<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> predicate)
   {
