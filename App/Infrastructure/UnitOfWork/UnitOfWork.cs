@@ -11,7 +11,7 @@ public class UnitOfWork(DatabaseContext context, IMapper mapper) : IUnitOfWork
   private readonly IMapper _mapper = mapper;
 
   private IUserRepository? _users;
-  public IUserRepository Users => _users ??= new UserRepository(_context, _mapper);
+  public IUserRepository Users => _users ??= new UserRepository(_context);
 
   private IResetTokenRepository? _tokens;
   public IResetTokenRepository Tokens => _tokens ??= new ResetTokenRepository(_context);
