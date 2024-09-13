@@ -17,6 +17,12 @@ public class Tokens(IConfiguration config) : ITokens
     SigningCredentials credentials = new(key, SecurityAlgorithms.HmacSha256);
 
     List<Claim> claims = [new(JwtRegisteredClaimNames.Sub, user.Id.ToString())];
+    if (user.Role?.Scopes != null)
+    {
+      claims.AddRange(user.Role.Scopes
+        .Where(s => !string.IsNullOrEmpty(s.Scope?.Name))
+        .Select(s => new Claim("scopes", s.Scope.Name)));
+    }
 
     JwtSecurityToken token = new(
       issuer: _config["JWT:Issuer"],
