@@ -24,4 +24,7 @@ public class RegisterUserDTO
   [Required]
   [StringLength(9)]
   public string PhoneNumber { get; set; } = string.Empty;
+
+  [Required]
+  public int RoleId { get; set; }
 }
