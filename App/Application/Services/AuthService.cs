@@ -21,18 +21,17 @@ public class AuthService(
 
   public async Task<User> RegisterUser(RegisterUserDTO dto)
   {
-    User user = _mapper.Map<User>(dto);
-    if (await _unitOfWork.Users.FindToValidRegister(user) != null)
+    if (await _unitOfWork.Users.FindUserToAuth(dto.Email, dto.FirstName) != null)
     {
       throw new LogicException("This credentials are not available");
     }
-    user.Password = _encrypt.Hash(dto.Password);
-    return await _unitOfWork.Users.CreateAsync(user);
+    dto.Password = _encrypt.Hash(dto.Password);
+    return await _unitOfWork.Users.CreateAsync(_mapper.Map<User>(dto));
   }
 
   public async Task<User> LoginUser(LoginUserDTO dto)
   {
-    User? existingUser = await _unitOfWork.Users.FindAsync(u => u.Email == dto.Email)
+    User? existingUser = await _unitOfWork.Users.FindUserToAuth(dto.Email)
       ?? throw new LogicException("This user does not exist");
     if (!_encrypt.Verify(existingUser.Password, dto.Password))
     {
