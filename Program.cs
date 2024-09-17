@@ -45,6 +45,9 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddPolicies();
 
+// CORS
+builder.Services.EnableCors();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -56,4 +59,5 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.MapControllers();
+app.UseCors("Develop");
 app.Run();
