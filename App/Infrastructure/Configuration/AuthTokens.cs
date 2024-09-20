@@ -6,7 +6,7 @@ namespace Pets_And_Paws_Api.App.Infrastructure.Configuration;
 
 public static class AuthTokens
 {
-  public static void AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
+  public static void EnableTokens(this IServiceCollection services, IConfiguration configuration)
   {
     services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
       .AddJwtBearer(options =>
