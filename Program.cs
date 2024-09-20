@@ -42,11 +42,14 @@ builder.Services.AddScoped<ITokens, Tokens>();
 builder.Services.AddAutoMapper(typeof(Program));
 
 // Authentication & Authorization
-builder.Services.AddJwtAuthentication(builder.Configuration);
-builder.Services.AddPolicies();
+builder.Services.EnableTokens(builder.Configuration);
+builder.Services.EnablePolicies();
 
 // CORS
 builder.Services.EnableCors();
+
+// Rate Limiter
+builder.Services.EnableRateLimiter();
 
 var app = builder.Build();
 
@@ -59,5 +62,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.MapControllers();
+app.UseRateLimiter();
 app.UseCors("Develop");
 app.Run();
