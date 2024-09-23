@@ -1,13 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using Pets_And_Paws_Api.App.Domain.Models;
-using Pets_And_Paws_Api.App.Domain.Utilities;
 using Pets_And_Paws_Api.App.Infrastructure.Database.Configuration;
 using Pets_And_Paws_Api.App.Infrastructure.Database.Seeders;
 
 namespace Pets_And_Paws_Api.App.Infrastructure.Database;
 
-public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbContext(options)
+public class DatabaseContext(DbContextOptions<DatabaseContext> options, IConfiguration config) : DbContext(options)
 {
+  private readonly IConfiguration _config = config;
   public DbSet<User> User { get; set; }
   public DbSet<Role> Role { get; set; }
   public DbSet<ResetToken> ResetToken { get; set; }
@@ -34,7 +34,7 @@ public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbCont
     // Seeders
     modelBuilder.ApplyConfiguration(new ScopeSeed());
     modelBuilder.ApplyConfiguration(new RoleSeed());
-    modelBuilder.ApplyConfiguration(new UserSeed());
+    modelBuilder.ApplyConfiguration(new UserSeed(_config));
 
     // Relationships
     modelBuilder.ApplyConfiguration(new RoleScopeConfig());

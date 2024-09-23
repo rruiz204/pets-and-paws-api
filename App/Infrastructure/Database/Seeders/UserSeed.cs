@@ -1,14 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Pets_And_Paws_Api.App.Domain.Models;
-using Pets_And_Paws_Api.App.Domain.Utilities;
 
 namespace Pets_And_Paws_Api.App.Infrastructure.Database.Seeders;
 
-public class UserSeed : IEntityTypeConfiguration<User>
+public class UserSeed(IConfiguration config) : IEntityTypeConfiguration<User>
 {
-  // Password = 12345678
-  private const string password = "AQAAAAIAAYagAAAAENG9AhRVMNmmMHnAGmgFw4By3LxV9lekn7r6KC+RJrmRvFYgE2gcgW7G8I3EelghhA==";
+  private readonly string password = config["DefaultPassword"]!;
 
     public void Configure(EntityTypeBuilder<User> builder)
   {
