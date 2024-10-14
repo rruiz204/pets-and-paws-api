@@ -12,3 +12,10 @@ obj/
 
 # App Settings
 appsettings.json
+appsettings.Development.json
+
+# Personal Settings
+.vscode
+
+# Database for local development
+pets-and-paws.db
