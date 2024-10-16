@@ -1,7 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
+using Infrastructure.Factories.DbContextFactory;
 using Infrastructure.Database.Contexts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Infrastructure;
 
@@ -9,25 +10,20 @@ public static class Bootstrap
 {
   public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
   {
-    var dataset = configuration["DefaultDataset"] ?? throw new InvalidOperationException("DefaultDataset is not configured ");
+    AddDbContexts(services, configuration);
+    services.AddTransient<IDbContextFactory, DbContextFactory>();
+    
+    return services;
+  }
 
-    var connectionString = configuration.GetConnectionString(dataset)
-      ?? throw new InvalidOperationException($"Connection string for {dataset} not found");
-
-    services.AddDbContext<DatabaseContext>(options => {
-      switch (dataset)
-      {
-        case "PostgresDefault":
-          options.UseNpgsql(connectionString);
-          break;
-        case "SQLiteDefault":
-          options.UseSqlite(connectionString);
-          break;
-        default:
-          throw new NotSupportedException($"Database provider not supported: {dataset}");
-      }
+  public static void AddDbContexts(IServiceCollection services, IConfiguration configuration)
+  {
+    services.AddDbContext<PgDbContext>(options => {
+      options.UseNpgsql(configuration.GetConnectionString("PostgresConn"));
     });
 
-    return services;
+    services.AddDbContext<SQLiteDbContext>(options => {
+      options.UseSqlite(configuration.GetConnectionString("SQLiteConn"));
+    });
   }
 }
