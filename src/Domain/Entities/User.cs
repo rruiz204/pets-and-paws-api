@@ -1,8 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using Domain.Entities.Base;
 
 namespace Domain.Entities;
 
-public class User
+public class User : IDentificable, ITimestamp
 {
   [Key]
   public int Id { get; set; }
@@ -21,4 +22,7 @@ public class User
 
   [Required]
   public string Password { get; set; } = string.Empty;
+  
+  public DateTime CreatedAt { get; set; }
+  public DateTime UpdatedAt { get; set; }
 }
