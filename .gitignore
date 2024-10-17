@@ -19,3 +19,5 @@ appsettings.Development.json
 
 # Database for local development
 pets-and-paws.db
+pets-and-paws.db-shm
+pets-and-paws.db-wal
