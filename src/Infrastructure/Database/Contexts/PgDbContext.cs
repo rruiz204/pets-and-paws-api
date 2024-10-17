@@ -7,5 +7,8 @@ public class PgDbContext(DbContextOptions<PgDbContext> options) : BaseDbContext(
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     base.OnModelCreating(modelBuilder);
+
+    SetDefaultValueSQL(modelBuilder, "CreatedAt", "NOW()");
+    SetDefaultValueSQL(modelBuilder, "UpdatedAt", "NOW()");
   }
 }

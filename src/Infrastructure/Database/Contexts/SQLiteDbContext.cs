@@ -7,5 +7,8 @@ public class SQLiteDbContext(DbContextOptions<SQLiteDbContext> options) : BaseDb
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     base.OnModelCreating(modelBuilder);
+
+    SetDefaultValueSQL(modelBuilder, "CreatedAt", "CURRENT_TIMESTAMP");
+    SetDefaultValueSQL(modelBuilder, "UpdatedAt", "CURRENT_TIMESTAMP");
   }
 }
