@@ -8,6 +8,8 @@ public class SQLiteDbContext(DbContextOptions<SQLiteDbContext> options) : BaseDb
   {
     base.OnModelCreating(modelBuilder);
 
+    ApplyConfigurations(modelBuilder);
+
     SetDefaultValueSQL(modelBuilder, "CreatedAt", "CURRENT_TIMESTAMP");
     SetDefaultValueSQL(modelBuilder, "UpdatedAt", "CURRENT_TIMESTAMP");
   }

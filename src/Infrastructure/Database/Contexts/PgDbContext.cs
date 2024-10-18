@@ -8,6 +8,8 @@ public class PgDbContext(DbContextOptions<PgDbContext> options) : BaseDbContext(
   {
     base.OnModelCreating(modelBuilder);
 
+    ApplyConfigurations(modelBuilder);
+
     SetDefaultValueSQL(modelBuilder, "CreatedAt", "NOW()");
     SetDefaultValueSQL(modelBuilder, "UpdatedAt", "NOW()");
   }
