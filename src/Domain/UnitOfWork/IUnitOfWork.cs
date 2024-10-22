@@ -1,6 +1,6 @@
 using Domain.Repositories;
 
-namespace Infrastructure.UnitOfWork;
+namespace Domain.UnitOfWork;
 
 public interface IUnitOfWork
 {

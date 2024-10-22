@@ -3,7 +3,7 @@ using Infrastructure.Factories.DbContextFactory;
 using Infrastructure.Database.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Infrastructure.UnitOfWork;
+using Domain.UnitOfWork;
 
 namespace Infrastructure;
 

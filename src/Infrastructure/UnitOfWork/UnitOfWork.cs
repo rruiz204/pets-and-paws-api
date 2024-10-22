@@ -1,4 +1,5 @@
 using Domain.Repositories;
+using Domain.UnitOfWork;
 using Infrastructure.Database.Contexts;
 using Infrastructure.Factories.DbContextFactory;
 using Infrastructure.Repositories;
