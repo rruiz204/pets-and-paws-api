@@ -8,7 +8,7 @@ public class BaseDbContext(DbContextOptions options) : DbContext(options)
 {
   public DbSet<User> User { get; set; }
 
-  protected void ApplyConfigurations(ModelBuilder builder)
+  protected static void ApplyConfigurations(ModelBuilder builder)
   {
     builder.ApplyConfiguration(new UserConfig());
   }
