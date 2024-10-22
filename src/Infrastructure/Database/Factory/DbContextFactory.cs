@@ -2,7 +2,7 @@ using Infrastructure.Database.Contexts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Infrastructure.Factories.DbContextFactory;
+namespace Infrastructure.Database.Factory;
 
 public class DbContextFactory(IServiceProvider serviceProvider, IConfiguration configuration) : IDbContextFactory
 {

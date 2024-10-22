@@ -1,5 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
-using Infrastructure.Factories.DbContextFactory;
+using Infrastructure.Database.Factory;
 using Infrastructure.Database.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

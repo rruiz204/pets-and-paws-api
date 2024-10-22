@@ -1,6 +1,6 @@
 using Infrastructure.Database.Contexts;
 
-namespace Infrastructure.Factories.DbContextFactory;
+namespace Infrastructure.Database.Factory;
 
 public interface IDbContextFactory
 {

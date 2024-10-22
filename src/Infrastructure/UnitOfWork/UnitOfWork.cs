@@ -1,7 +1,7 @@
 using Domain.Repositories;
 using Domain.UnitOfWork;
 using Infrastructure.Database.Contexts;
-using Infrastructure.Factories.DbContextFactory;
+using Infrastructure.Database.Factory;
 using Infrastructure.Repositories;
 
 namespace Infrastructure.UnitOfWork;
