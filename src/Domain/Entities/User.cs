@@ -1,9 +1,8 @@
 using System.ComponentModel.DataAnnotations;
-using Domain.Entities.Base;
 
 namespace Domain.Entities;
 
-public class User : IDentificable, ITimestamp
+public class User
 {
   [Key]
   public int Id { get; set; }
