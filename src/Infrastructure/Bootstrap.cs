@@ -11,22 +11,17 @@ public static class Bootstrap
 {
   public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
   {
-    AddDbContexts(services, configuration);
+    services.AddDbContext<PgDbContext>(options => {
+      options.UseNpgsql(configuration["DatabaseSettings:Connections:Postgres"]);
+    });
+
+    services.AddDbContext<SQLiteDbContext>(options => {
+      options.UseSqlite(configuration["DatabaseSettings:Connections:SQLite"]);
+    });
 
     services.AddTransient<IDbContextFactory, DbContextFactory>();
     services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
     
     return services;
-  }
-
-  public static void AddDbContexts(IServiceCollection services, IConfiguration configuration)
-  {
-    services.AddDbContext<PgDbContext>(options => {
-      options.UseNpgsql(configuration.GetConnectionString("PostgresConn"));
-    });
-
-    services.AddDbContext<SQLiteDbContext>(options => {
-      options.UseSqlite(configuration.GetConnectionString("SQLiteConn"));
-    });
   }
 }

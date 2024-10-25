@@ -12,11 +12,11 @@ public class DbContextFactory(IServiceProvider serviceProvider, IConfiguration c
   public BaseDbContext GetDbContext()
   {
     var defaultConnection = _configuration["DatabaseSettings:DefaultConnection"]
-      ?? throw new InvalidDataException("");
+      ?? throw new InvalidDataException("'DefaultConnection' is missing or invalid");
 
-    if (defaultConnection == "PostgresConn") return _serviceProvider.GetRequiredService<PgDbContext>();
-    if (defaultConnection == "SQLiteConn") return _serviceProvider.GetRequiredService<SQLiteDbContext>();
+    if (defaultConnection == "Postgres") return _serviceProvider.GetRequiredService<PgDbContext>();
+    if (defaultConnection == "SQLite") return _serviceProvider.GetRequiredService<SQLiteDbContext>();
 
-    throw new NotSupportedException("Invalid");
+    throw new NotSupportedException("The 'DefaultConnection' is not supported");
   }
 }
