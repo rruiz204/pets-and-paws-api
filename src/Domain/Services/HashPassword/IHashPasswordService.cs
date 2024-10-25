@@ -1,4 +1,4 @@
-namespace Domain.Services;
+namespace Domain.Services.HashPassword;
 
 public interface IHashPasswordService
 {

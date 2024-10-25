@@ -1,5 +1,5 @@
 using Domain.Entities;
-using Domain.Services;
+using Domain.Services.HashPassword;
 using Microsoft.AspNetCore.Identity;
 
 namespace Application.Services;
