@@ -12,7 +12,7 @@ services:
     depends_on:
       - pets-and-paws-db
     environment:
-      - ConnectionStrings__PostgreSQL=Host=pets-and-paws-db;Port=5432;Database=pets-and-paws;Username=postgres;Password=admin123
+      - DatabaseSettings__Connections__Postgres=Host=pets-and-paws-db;Port=5432;Database=pets-and-paws;Username=postgres;Password=admin123
 
   pets-and-paws-db:
     image: postgres:14

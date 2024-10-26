@@ -9,6 +9,7 @@
 # Directories
 bin/
 obj/
+dist/
 
 # App Settings
 appsettings.json
@@ -16,8 +17,3 @@ appsettings.Development.json
 
 # Personal Settings
 .vscode
-
-# Database for local development
-pets-and-paws.db
-pets-and-paws.db-shm
-pets-and-paws.db-wal

@@ -1,6 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
-using Infrastructure.Database.Factory;
-using Infrastructure.Database.Contexts;
+using Infrastructure.Database.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Domain.UnitOfWork;
@@ -15,13 +14,7 @@ public static class Bootstrap
       options.UseNpgsql(configuration["DatabaseSettings:Connections:Postgres"]);
     });
 
-    services.AddDbContext<SQLiteDbContext>(options => {
-      options.UseSqlite(configuration["DatabaseSettings:Connections:SQLite"]);
-    });
-
-    services.AddTransient<IDbContextFactory, DbContextFactory>();
     services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
-    
     return services;
   }
 }
