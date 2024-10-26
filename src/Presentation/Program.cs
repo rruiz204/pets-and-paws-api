@@ -6,9 +6,9 @@ using Presentation.Middlewares;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
-    .AddPresentation()
     .AddInfrastructure(builder.Configuration)
-    .AddApplication();
+    .AddApplication(builder.Configuration)
+    .AddPresentation();
 
 var app = builder.Build();
 

@@ -2,7 +2,7 @@ using Domain.UnitOfWork;
 using MediatR;
 using Mapster;
 using Domain.Entities;
-using Domain.Services;
+using Domain.Services.HashPassword;
 
 namespace Application.Features.Users.CreateUser;
 

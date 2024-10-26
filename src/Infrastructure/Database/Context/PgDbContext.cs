@@ -1,3 +1,4 @@
+using Domain.Entities;
 using Infrastructure.Database.Configurations;
 using Microsoft.EntityFrameworkCore;
 
@@ -5,6 +6,8 @@ namespace Infrastructure.Database.Context;
 
 public class PgDbContext(DbContextOptions<PgDbContext> options) : DbContext(options)
 {
+  public DbSet<User> User { get; set; }
+
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     base.OnModelCreating(modelBuilder);

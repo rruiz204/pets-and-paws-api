@@ -1,10 +1,12 @@
 using Application.Features.Users.CreateUser;
 using Application.Features.Users.GetUsers;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers;
 
+/* [Authorize] */
 [ApiController]
 public class UserController(IMediator mediator) : BaseApiController
 {
