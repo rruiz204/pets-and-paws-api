@@ -1,1 +1,0 @@
-namespace Application.Features.Authentication.LoginUser;
