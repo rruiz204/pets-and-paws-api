@@ -1,0 +1,15 @@
+# Compiled object files
+*.o
+*.obj
+*.dll
+*.exe
+*.pdb
+*.mdb
+
+# Directories
+bin/
+obj/
+.vscode/
+
+# App Settings
+appsettings.json
