@@ -5,7 +5,7 @@ namespace Infrastructure.Database.Context;
 
 public class PgDbContext(DbContextOptions<PgDbContext> otpions) : DbContext(otpions)
 {
-  DbSet<User> User { get; set; }
+  public DbSet<User> User { get; set; }
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
