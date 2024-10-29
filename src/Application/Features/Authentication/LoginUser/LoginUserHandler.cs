@@ -16,10 +16,10 @@ public class LoginUserHandler(
   public async Task<LoginUserResponse> Handle(LoginUserCommand command, CancellationToken cancellationToken)
   {
     var user = await _unitOfWork.User.Find(u => u.Email == command.Email)
-      ?? throw new InvalidDataException("this user does not exists");
+      ?? throw new InvalidDataException($"User with email '{command.Email}' does not exist.");
 
     if (!_hasher.Verify(command.Password, user.Password))
-      throw new InvalidDataException("incorrect credentials");
+      throw new InvalidDataException("The provided password is incorrect.");
 
     var token = _jwtService.GenerateToken(user);
     return new LoginUserResponse {

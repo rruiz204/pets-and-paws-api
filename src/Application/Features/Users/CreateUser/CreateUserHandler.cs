@@ -17,7 +17,7 @@ public class CreateUserHandler(IUnitOfWork unitOfWork, IPasswordHasherService ha
     command.Password = _hasher.Hash(command.Password);
 
     if (await _unitOfWork.User.Find(u => u.Email == command.Email || u.FirstName == command.FirstName) != null)
-      throw new InvalidDataException("credentials in use");
+      throw new InvalidDataException("The credentials are already in use");
 
     var user = await _unitOfWork.User.Create(command);
     return user.Adapt<CreateUserResponse>();
