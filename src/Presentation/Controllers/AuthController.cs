@@ -9,7 +9,7 @@ public class AuthController(IMediator mediator) : BaseApiController
 {
   private readonly IMediator _mediator = mediator;
 
-  [HttpPost("login")]
+  [HttpPost("auth/login")]
   public async Task<IActionResult> LoginUser([FromBody] LoginUserCommand command)
   {
     return Ok(await _mediator.Send(command));

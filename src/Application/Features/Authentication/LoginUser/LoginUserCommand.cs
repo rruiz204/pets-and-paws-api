@@ -4,6 +4,6 @@ namespace Application.Features.Authentication.LoginUser;
 
 public class LoginUserCommand : IRequest<LoginUserResponse>
 {
-  public string? Email { get; set; }
-  public string? Password { get; set; }
+  public string Email { get; set; } = string.Empty;
+  public string Password { get; set; } = string.Empty;
 }
