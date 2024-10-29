@@ -35,7 +35,7 @@ public static class Bootstrap
     services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
     services.AddScoped<PasswordHasher<User>>();
-    services.AddScoped<IPasswordHasherService, PasswordHasherService>();
+    services.AddScoped<IHasherService, HasherService>();
 
     services.AddScoped<IJwtService, JwtService>();
 

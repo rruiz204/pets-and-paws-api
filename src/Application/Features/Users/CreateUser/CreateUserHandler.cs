@@ -6,10 +6,10 @@ using MediatR;
 
 namespace Application.Features.Users.CreateUser;
 
-public class CreateUserHandler(IUnitOfWork unitOfWork, IPasswordHasherService hasher) : IRequestHandler<CreateUserCommand, CreateUserResponse>
+public class CreateUserHandler(IUnitOfWork unitOfWork, IHasherService hasher) : IRequestHandler<CreateUserCommand, CreateUserResponse>
 {
   private readonly IUnitOfWork _unitOfWork = unitOfWork;
-  private readonly IPasswordHasherService _hasher = hasher;
+  private readonly IHasherService _hasher = hasher;
 
   public async Task<CreateUserResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
   {

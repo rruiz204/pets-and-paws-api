@@ -6,11 +6,11 @@ namespace Application.Features.Authentication.LoginUser;
 
 public class LoginUserHandler(
   IUnitOfWork unitOfWork,
-  IPasswordHasherService hasher,
+  IHasherService hasher,
   IJwtService jwtService) : IRequestHandler<LoginUserCommand, LoginUserResponse>
 {
   private readonly IUnitOfWork _unitOfWork = unitOfWork;
-  private readonly IPasswordHasherService _hasher = hasher;
+  private readonly IHasherService _hasher = hasher;
   private readonly IJwtService _jwtService = jwtService;
 
   public async Task<LoginUserResponse> Handle(LoginUserCommand command, CancellationToken cancellationToken)
