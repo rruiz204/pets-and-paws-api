@@ -1,13 +1,17 @@
+using Application.Features.Users.CreateUser;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers;
 
 [ApiController]
-public class UserController : BaseApiController
+public class UserController(IMediator mediator) : BaseApiController
 {
-  [HttpGet("users")]
-  public IActionResult GetAllUsers()
+  private readonly IMediator _mediator = mediator;
+
+  [HttpPost("user")]
+  public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand command)
   {
-    return Ok(new { message = "all users" });
+    return Ok(await _mediator.Send(command));
   }
 }
