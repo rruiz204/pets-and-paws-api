@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using Domain.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Application.Exceptions.Handlers;
+using Application.Exceptions;
 
 namespace Application;
 
@@ -18,6 +20,10 @@ public static class Bootstrap
   {
     // === Configurations
     services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
+
+    // === Exceptions
+    services.AddTransient<IExceptionHandler, ValidationExceptionHandler>();
+    services.AddTransient<IExceptionHandler, InvalidDataExceptionHandler>();
 
     // === Dependency Injection
     services.AddMediatR(cfg =>
