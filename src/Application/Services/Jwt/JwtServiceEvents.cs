@@ -1,3 +1,4 @@
+using Application.Exceptions;
 using Domain.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
@@ -12,16 +13,23 @@ public partial class JwtService : IJwtService
     {
       OnAuthenticationFailed = context =>
       {
-        context.Response.StatusCode = 401;
+        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
         context.Response.ContentType = "application/json";
-        return context.Response.WriteAsJsonAsync(new { message = "Invalid token" });
+        return context.Response.WriteAsJsonAsync(new ErrorResponse
+        {
+          Title = "Unauthorized",
+          Error = "Invalid token"
+        });
       },
       OnChallenge = context =>
       {
-        context.HandleResponse();
-        context.Response.StatusCode = 401;
+        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
         context.Response.ContentType = "application/json";
-        return context.Response.WriteAsJsonAsync(new { message = "Token is missing" });
+        return context.Response.WriteAsJsonAsync(new ErrorResponse
+        {
+          Title = "Unauthorized",
+          Error = "Token is missing"
+        });
       }
     };
   }

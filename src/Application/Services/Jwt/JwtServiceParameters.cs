@@ -14,7 +14,7 @@ public partial class JwtService : IJwtService
     {
       ValidateIssuer = true,
       ValidateAudience = true,
-      ValidateLifetime = true,
+      ValidateLifetime = false,
       ValidateIssuerSigningKey = true,
       ValidIssuer = configuration["JwtSettings:Issuer"],
       ValidAudience = configuration["JwtSettings:Audience"],

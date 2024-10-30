@@ -40,9 +40,14 @@ public static class Bootstrap
 
     services.AddScoped<IJwtService, JwtService>();
 
-    services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
+    services.AddAuthentication(options => {
+      options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+      options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    }).AddJwtBearer(options => {
       options.TokenValidationParameters = JwtService.GetParameters(configuration);
       options.Events = JwtService.GetEvents();
     });
+
+    services.AddHttpContextAccessor();
   }
 }
