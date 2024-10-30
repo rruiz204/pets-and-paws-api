@@ -2,7 +2,7 @@ using Domain.Entities;
 using Domain.Services;
 using Microsoft.AspNetCore.Identity;
 
-namespace Application.Services;
+namespace Application.Services.Hasher;
 
 public class HasherService(PasswordHasher<User> hasher) : IHasherService
 {
