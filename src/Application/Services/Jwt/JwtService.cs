@@ -4,14 +4,16 @@ using System.Text;
 using Domain.Entities;
 using Domain.Services;
 using Domain.Settings;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Application.Services.Jwt;
 
-public partial class JwtService(IOptions<JwtSettings> jwtSettings) : IJwtService
+public partial class JwtService(IOptions<JwtSettings> jwtSettings, IHttpContextAccessor context) : IJwtService
 {
   private readonly JwtSettings _jwtSettings = jwtSettings.Value;
+  private readonly IHttpContextAccessor _context = context;
 
   public string GenerateToken(User user)
   {
@@ -27,5 +29,18 @@ public partial class JwtService(IOptions<JwtSettings> jwtSettings) : IJwtService
       signingCredentials: credentials);
 
     return new JwtSecurityTokenHandler().WriteToken(token);
+  }
+
+  public int? GetUserIdFromToken()
+  {
+    var user = _context.HttpContext?.User;
+
+    if (user != null)
+    {
+      var userIdClaim = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      if (int.TryParse(userIdClaim, out int userId)) return userId;
+    }
+    
+    return null;
   }
 }
