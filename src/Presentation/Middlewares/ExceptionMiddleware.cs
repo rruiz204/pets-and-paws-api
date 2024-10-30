@@ -23,6 +23,8 @@ public class ExceptionMiddleware(IEnumerable<IExceptionHandler> handlers, Reques
 
   private async Task HandleExceptionAsync(HttpContext context, Exception exception)
   {
+    if (context.Response.HasStarted) return;
+
     context.Response.ContentType = "application/json";
     var handler = _handlers.FirstOrDefault(h => h.CanHandle(exception));
     if (handler != null)
