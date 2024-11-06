@@ -17,6 +17,6 @@ public class ContextFactory : IDesignTimeDbContextFactory<PgDbContext>
 
     var builder = new DbContextOptionsBuilder<PgDbContext>();
     builder.UseNpgsql(configuration["DatabaseSettings:Connections:Postgres"]);
-    return new PgDbContext(builder.Options);
+    return new PgDbContext(builder.Options, configuration);
   }
 }
