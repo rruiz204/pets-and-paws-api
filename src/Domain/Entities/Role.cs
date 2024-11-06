@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Domain.Entities.Relations;
 
 namespace Domain.Entities;
 
@@ -14,6 +15,6 @@ public class Role
   [Required]
   public string Description { get; set; } = string.Empty;
 
-  public List<Claim> Claims { get; set; } = [];
-  public List<User> Users { get; set; } = [];
+  public List<RoleScope> RoleScopes { get; set; } = [];
+  public List<UserRole> UserRoles { get; set; } = [];
 }

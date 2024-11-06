@@ -1,8 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using Domain.Entities.Relations;
 
 namespace Domain.Entities;
 
-public class Claim
+public class Scope
 {
   [Key]
   public int Id { get; set; }
@@ -14,5 +15,5 @@ public class Claim
   [Required]
   public string Description { get; set; } = string.Empty;
 
-  public List<Role> Roles { get; set; } = [];
+  public List<RoleScope> RoleScopes { get; set; } = [];
 }
