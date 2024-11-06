@@ -5,4 +5,5 @@ namespace Domain.Database;
 public interface IUnitOfWork
 {
   IUserRepository User { get; }
+  IResetTokenRepository ResetToken { get; }
 }

@@ -10,4 +10,7 @@ public class UnitOfWork(PgDbContext context) : IUnitOfWork
 
   private IUserRepository? _user;
   public IUserRepository User => _user ??= new UserRepository(_context);
+
+  private IResetTokenRepository? _resetToken;
+  public IResetTokenRepository ResetToken => _resetToken ??= new ResetTokenRepository(_context);
 }
