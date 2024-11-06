@@ -1,6 +1,5 @@
 using Domain.Entities;
 using Domain.Entities.Relations;
-using Domain.Services;
 using Infrastructure.Database.Configurations;
 using Infrastructure.Database.Configurations.Relations;
 using Microsoft.EntityFrameworkCore;
@@ -11,11 +10,13 @@ namespace Infrastructure.Database.Context;
 public class PgDbContext(DbContextOptions<PgDbContext> options, IConfiguration configuration) : DbContext(options)
 {
   private readonly IConfiguration _configuration = configuration;
+  
   public DbSet<User> User { get; set; }
   public DbSet<UserRole> UserRole { get; set; }
   public DbSet<Role> Role { get; set; }
   public DbSet<Scope> Scope { get; set; }
   public DbSet<RoleScope> RoleScope { get; set; }
+  public DbSet<ResetToken> ResetToken { get; set; }
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
