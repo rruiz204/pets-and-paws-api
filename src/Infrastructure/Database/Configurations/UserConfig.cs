@@ -8,9 +8,8 @@ public class UserConfig : IEntityTypeConfiguration<User>
 {
   public void Configure(EntityTypeBuilder<User> builder)
   {
-    builder
-      .HasMany(u => u.Roles)
-      .WithMany(r => r.Users)
-      .UsingEntity(j => j.ToTable("UserRole"));
+    /* builder.HasData(
+      new User { Id = 1, FirstName = "admin", LastName = "admin", Email = "admin@admin.com", Password = "" }
+    ); */
   }
 }

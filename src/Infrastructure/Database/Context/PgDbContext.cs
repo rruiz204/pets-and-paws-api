@@ -1,14 +1,18 @@
 using Domain.Entities;
+using Domain.Entities.Relations;
 using Infrastructure.Database.Configurations;
+using Infrastructure.Database.Configurations.Relations;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database.Context;
 
-public class PgDbContext(DbContextOptions<PgDbContext> otpions) : DbContext(otpions)
+public class PgDbContext(DbContextOptions<PgDbContext> options) : DbContext(options)
 {
   public DbSet<User> User { get; set; }
+  public DbSet<UserRole> UserRole { get; set; }
   public DbSet<Role> Role { get; set; }
-  public DbSet<Claim> Claim { get; set; }
+  public DbSet<Scope> Scope { get; set; }
+  public DbSet<RoleScope> RoleScope { get; set; }
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
@@ -17,8 +21,10 @@ public class PgDbContext(DbContextOptions<PgDbContext> otpions) : DbContext(otpi
     SetDefaultValueSQL(modelBuilder, "CreatedAt", "NOW()");
     SetDefaultValueSQL(modelBuilder, "UpdatedAt", "NOW()");
 
-    modelBuilder.ApplyConfiguration(new RoleConfig());
     modelBuilder.ApplyConfiguration(new UserConfig());
+    modelBuilder.ApplyConfiguration(new RoleConfig());
+    modelBuilder.ApplyConfiguration(new UserRoleConfig());
+    modelBuilder.ApplyConfiguration(new RoleScopeConfig());
   }
 
   private static void SetDefaultValueSQL(ModelBuilder builder, string property, string value)
