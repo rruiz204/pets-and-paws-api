@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Domain.Entities.Relations;
 
 namespace Domain.Entities;
 
@@ -25,5 +26,5 @@ public class User
   public DateTime CreatedAt { get; set; }
   public DateTime UpdatedAt { get; set; }
 
-  public List<Role> Roles { get; set; } = [];
+  public List<UserRole> UserRoles { get; set; } = [];
 }
