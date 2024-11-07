@@ -7,5 +7,11 @@ public static class Bootstrap
     services.AddControllers();
     services.AddEndpointsApiExplorer();
     services.AddSwaggerGen();
+
+    services.AddCors(options => {
+      options.AddPolicy(name: "Local", configurePolicy: policy => {
+        policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+      });
+    });
   }
 }
