@@ -8,6 +8,9 @@ public class UnitOfWork(PgDbContext context) : IUnitOfWork
 {
   private readonly PgDbContext _context = context;
 
+  public async Task<IPgTransaction> StartTransaction()
+    => new PgTransaction(await _context.Database.BeginTransactionAsync());
+
   private IUserRepository? _user;
   public IUserRepository User => _user ??= new UserRepository(_context);
 
