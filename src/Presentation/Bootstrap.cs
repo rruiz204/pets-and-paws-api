@@ -1,10 +1,15 @@
+using Presentation.Filters;
+
 namespace Presentation;
 
 public static class Bootstrap
 {
   public static void AddPresentation(this IServiceCollection services)
   {
-    services.AddControllers();
+    services.AddControllers(options => {
+      options.Filters.Add<ResponseFormatterFilter>();
+    });
+
     services.AddEndpointsApiExplorer();
     services.AddSwaggerGen();
 
