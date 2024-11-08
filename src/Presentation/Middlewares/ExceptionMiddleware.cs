@@ -8,6 +8,7 @@ public class ExceptionMiddleware(IEnumerable<IExceptionHandler> handlers, Reques
 {
   private readonly IEnumerable<IExceptionHandler> _handlers = handlers;
   private readonly RequestDelegate _next = next;
+  private readonly JsonSerializerOptions _jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
   public async Task InvokeAsync(HttpContext context)
   {
@@ -44,6 +45,6 @@ public class ExceptionMiddleware(IEnumerable<IExceptionHandler> handlers, Reques
     }
   }
 
-  private static async Task WriteContext(HttpContext context, ErrorResponse response)
-    => await context.Response.WriteAsync(JsonSerializer.Serialize(response));
+  private async Task WriteContext(HttpContext context, ErrorResponse response)
+    => await context.Response.WriteAsync(JsonSerializer.Serialize(new { Error = response }, _jsonOptions));
 }
