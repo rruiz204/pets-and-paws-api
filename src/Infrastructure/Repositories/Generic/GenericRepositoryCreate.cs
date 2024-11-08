@@ -7,7 +7,6 @@ public partial class GenericRepository<TEntity> : IGenericRepository<TEntity>
   public async Task<TEntity> Create(TEntity entity)
   {
     await dbSet.AddAsync(entity);
-    await _context.SaveChangesAsync();
     return entity;
   }
 }
