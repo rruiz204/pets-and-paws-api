@@ -1,5 +1,6 @@
 using Application.Features.Authentication.ForgotPassword;
 using Application.Features.Authentication.LoginUser;
+using Application.Features.Authentication.ResetPassword;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +19,12 @@ public class AuthController(IMediator mediator) : BaseApiController
 
   [HttpPost("auth/forgot-password")]
   public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordCommand command)
+  {
+    return Ok(await _mediator.Send(command));
+  }
+
+  [HttpPost("auth/reset-password")]
+  public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordCommand command)
   {
     return Ok(await _mediator.Send(command));
   }
