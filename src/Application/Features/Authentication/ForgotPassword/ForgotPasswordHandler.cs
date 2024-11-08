@@ -11,7 +11,7 @@ public class ForgotPasswordHandler(IUnitOfWork unitOfWork) : IRequestHandler<For
   public async Task<ForgotPasswordResponse> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
   {
     if (await _unitOfWork.User.Find(u => u.Email == request.Email) == null)
-      throw new InvalidDataException($"User with email '{request.Email}' does not exist.");
+      throw new InvalidDataException($"User with this email does not exist.");
 
     if (await _unitOfWork.ResetToken.Find(rt => rt.Email == request.Email && rt.Expiration >= DateTime.UtcNow) != null)
       throw new InvalidDataException($"There is an active token with this email");
@@ -24,6 +24,7 @@ public class ForgotPasswordHandler(IUnitOfWork unitOfWork) : IRequestHandler<For
     };
 
     await _unitOfWork.ResetToken.Create(token);
+    await _unitOfWork.SaveChangesAsync();
     
     return new ForgotPasswordResponse {
       Message = "Reset token created!"
