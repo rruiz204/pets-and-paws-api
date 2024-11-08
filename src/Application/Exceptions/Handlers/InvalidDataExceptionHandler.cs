@@ -15,7 +15,7 @@ public class InvalidDataExceptionHandler : IExceptionHandler
     return new ErrorResponse
     {
       Title = "One or more validation errors occurred",
-      Error = ex.Message
+      Message = ex.Message
     };
   }
 }

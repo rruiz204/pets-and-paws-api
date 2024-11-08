@@ -38,7 +38,7 @@ public class ExceptionMiddleware(IEnumerable<IExceptionHandler> handlers, Reques
       var response = new ErrorResponse 
       {
         Title = "An internal server error occurred",
-        Error = exception.Message
+        Message = exception.Message
       };
       await WriteContext(context, response);
     }

@@ -18,7 +18,7 @@ public partial class JwtService : IJwtService
         return context.Response.WriteAsJsonAsync(new ErrorResponse
         {
           Title = "Unauthorized",
-          Error = "Invalid token"
+          Message = "Invalid token"
         });
       },
       OnChallenge = context =>
@@ -28,7 +28,7 @@ public partial class JwtService : IJwtService
         return context.Response.WriteAsJsonAsync(new ErrorResponse
         {
           Title = "Unauthorized",
-          Error = "Token is missing"
+          Message = "Token is missing"
         });
       }
     };

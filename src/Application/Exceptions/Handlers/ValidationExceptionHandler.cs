@@ -16,7 +16,7 @@ public class ValidationExceptionHandler : IExceptionHandler
     return new ErrorResponse
     {
       Title = "One or more validation errors occurred",
-      Error = ex.Errors.First().ErrorMessage
+      Message = ex.Errors.First().ErrorMessage
     };
   }
 }
