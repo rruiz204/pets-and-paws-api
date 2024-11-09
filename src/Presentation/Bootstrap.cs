@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.RateLimiting;
 using System.Threading.RateLimiting;
-using Presentation.Filters;
 
 namespace Presentation;
 
@@ -8,10 +7,7 @@ public static class Bootstrap
 {
   public static void AddPresentation(this IServiceCollection services, IConfiguration configuration)
   {
-    services.AddControllers(options =>
-    {
-      options.Filters.Add<ResponseFormatterFilter>();
-    });
+    services.AddControllers();
 
     services.AddEndpointsApiExplorer();
     services.AddSwaggerGen();

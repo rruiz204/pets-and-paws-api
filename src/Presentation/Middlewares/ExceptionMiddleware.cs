@@ -46,5 +46,5 @@ public class ExceptionMiddleware(IEnumerable<IExceptionHandler> handlers, Reques
   }
 
   private async Task WriteContext(HttpContext context, ErrorResponse response)
-    => await context.Response.WriteAsync(JsonSerializer.Serialize(new { Error = response }, _jsonOptions));
+    => await context.Response.WriteAsync(JsonSerializer.Serialize(response, _jsonOptions));
 }
