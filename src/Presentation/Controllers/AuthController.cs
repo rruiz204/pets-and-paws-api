@@ -3,10 +3,12 @@ using Application.Features.Authentication.LoginUser;
 using Application.Features.Authentication.ResetPassword;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace Presentation.Controllers;
 
 [ApiController]
+[EnableRateLimiting("Fixed")]
 public class AuthController(IMediator mediator) : BaseApiController
 {
   private readonly IMediator _mediator = mediator;
