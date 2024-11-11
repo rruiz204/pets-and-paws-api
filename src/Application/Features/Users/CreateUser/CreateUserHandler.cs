@@ -1,6 +1,6 @@
 using Domain.Database;
 using Domain.Entities;
-using Domain.Services;
+using Domain.Services.Hasher;
 using Mapster;
 using MediatR;
 

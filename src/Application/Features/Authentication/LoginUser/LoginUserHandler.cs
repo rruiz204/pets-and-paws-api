@@ -1,5 +1,6 @@
 using Domain.Database;
-using Domain.Services;
+using Domain.Services.Jwt;
+using Domain.Services.Hasher;
 using MediatR;
 
 namespace Application.Features.Authentication.LoginUser;
@@ -21,7 +22,7 @@ public class LoginUserHandler(
     if (!_hasher.Verify(command.Password, user.Password))
       throw new InvalidDataException("The provided password is incorrect.");
 
-    var token = _jwtService.GenerateToken(user);
+    var token = _jwtService.Generate(user);
     return new LoginUserResponse {
       Token = token,
       Type = "Bearer"

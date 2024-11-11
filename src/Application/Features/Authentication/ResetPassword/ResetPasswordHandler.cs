@@ -1,5 +1,5 @@
 using Domain.Database;
-using Domain.Services;
+using Domain.Services.Hasher;
 using MediatR;
 
 namespace Application.Features.Authentication.ResetPassword;
