@@ -1,0 +1,86 @@
+Table User {
+  id integer [pk]
+  firstName string
+  lastName string
+  email string
+  phoneNumber string
+  password string
+}
+
+Table Role {
+  id integer [pk]
+  name string
+  description string
+}
+
+Table Scope {
+  id integer [pk]
+  name string
+  description string
+}
+
+Ref UserRole: User.id <> Role.id
+Ref RoleScope: Role.id <> Scope.id
+
+
+
+Table Pet {
+  id integer [pk]
+  name string
+  age integer
+  gender string
+  specie string
+  weight string
+  client_id integer [ref: > Client.id]
+}
+
+Table Client {
+  id integer [pk]
+  firstName string
+  lastName string
+  email string
+  phoneNumber string
+  type string
+}
+
+
+Table Vaccines {
+  id integer [pk]
+  pet_id integer [ref: > Pet.id]
+  medicine_id integer [ref: > Medicines.id]
+  responsible_id integer [ref: > User.id]
+  dosage string
+  application_date datetime
+  next_application datetime
+  observations string
+}
+
+Table MedicalHistory {
+  id integer [pk]
+  pet_id integer [ref: > Pet.id]
+  veterinarian_id integer [ref: - User.id]
+  assistant_id integer [ref: - User.id]
+  consultation_date datetime
+  reason string
+  diagnostic string
+  observations string
+}
+
+Table Medicines {
+  id integer [pk]
+  name string
+  brand string
+  dosage string
+  application_type string
+  frequency string
+  description string
+  stock integer
+  provider_id integer [ref:> Providers.id]
+}
+
+Table Providers {
+  id integer [pk]
+  name string
+  email string
+  phoneNumber string
+}
