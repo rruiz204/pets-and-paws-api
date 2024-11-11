@@ -34,12 +34,14 @@ public static class Bootstrap
     });
 
     services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+    services.AddHttpContextAccessor();
 
     services.AddScoped<PasswordHasher<User>>();
     services.AddScoped<IHasherService, HasherService>();
 
     services.AddScoped<IJwtService, JwtService>();
 
+    // === Authentication & JWT
     services.AddAuthentication(options => {
       options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
       options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -47,7 +49,5 @@ public static class Bootstrap
       options.TokenValidationParameters = JwtService.GetParameters(configuration);
       options.Events = JwtService.GetEvents();
     });
-
-    services.AddHttpContextAccessor();
   }
 }

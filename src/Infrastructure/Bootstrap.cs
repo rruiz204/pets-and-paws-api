@@ -10,10 +10,12 @@ public static class Bootstrap
 {
   public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
   {
+    // === Database
     services.AddDbContext<PgDbContext>(options => {
       options.UseNpgsql(configuration["DatabaseSettings:Connections:Postgres"]);
     });
 
+    // === Dependency Injection
     services.AddScoped<IUnitOfWork, UnitOfWork>();
   }
 }

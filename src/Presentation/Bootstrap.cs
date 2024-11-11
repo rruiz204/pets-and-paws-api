@@ -7,12 +7,13 @@ public static class Bootstrap
 {
   public static void AddPresentation(this IServiceCollection services, IConfiguration configuration)
   {
+    // === Dependency Injection
     services.AddControllers();
 
     services.AddEndpointsApiExplorer();
     services.AddSwaggerGen();
 
-    // Rate Limiting
+    // === Rate Limiting
     services.AddRateLimiter(options =>
     {
       options.AddFixedWindowLimiter(policyName: "Fixed", options =>
@@ -24,7 +25,7 @@ public static class Bootstrap
       });
     });
 
-    // CORS
+    // === CORS
     services.AddCors(options =>
     {
       options.AddPolicy(name: "Local", configurePolicy: policy =>
