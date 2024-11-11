@@ -2,16 +2,20 @@ using FluentValidation;
 using System.Reflection;
 using Application.Behaviours;
 using Microsoft.Extensions.DependencyInjection;
-using Domain.Services;
-using Domain.Settings;
-using Application.Services.Jwt;
-using Application.Services.Hasher;
 using Microsoft.AspNetCore.Identity;
 using Domain.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Application.Exceptions.Handlers;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
+using Domain.Services.Jwt;
+using Application.Services.Jwt;
+using Domain.Services.Hasher;
+using Application.Services.Hasher;
+
 using Application.Exceptions;
+using Application.Exceptions.Handlers;
 
 namespace Application;
 
@@ -19,14 +23,20 @@ public static class Bootstrap
 {
   public static void AddApplication(this IServiceCollection services, IConfiguration configuration)
   {
-    // === Configurations
-    services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
+    var jwtSettings = configuration.GetSection("JwtSettings");
+    services.Configure<JwtSettings>(jwtSettings);
 
-    // === Exceptions
-    services.AddTransient<IExceptionHandler, ValidationExceptionHandler>();
-    services.AddTransient<IExceptionHandler, InvalidDataExceptionHandler>();
+    AddVitalServices(services);
+    AddExceptionHandlers(services);
+    AddJwtAuthentication(services, jwtSettings.Get<JwtSettings>()!);
 
-    // === Dependency Injection
+    services.AddScoped<PasswordHasher<User>>();
+    services.AddScoped<IHasherService, HasherService>();
+    services.AddScoped<IJwtService, JwtService>();
+  }
+
+  private static void AddVitalServices(IServiceCollection services)
+  {
     services.AddMediatR(cfg =>
     {
       cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
@@ -35,19 +45,40 @@ public static class Bootstrap
 
     services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
     services.AddHttpContextAccessor();
+  }
 
-    services.AddScoped<PasswordHasher<User>>();
-    services.AddScoped<IHasherService, HasherService>();
+  private static void AddExceptionHandlers(IServiceCollection services)
+  {
+    services.AddTransient<IExceptionHandler, ValidationExceptionHandler>();
+    services.AddTransient<IExceptionHandler, InvalidDataExceptionHandler>();
+    services.AddTransient<IExceptionHandler, UnauthorizedAccessExceptionHandler>();
+  }
 
-    services.AddScoped<IJwtService, JwtService>();
-
-    // === Authentication & JWT
-    services.AddAuthentication(options => {
+  private static void AddJwtAuthentication(IServiceCollection services, JwtSettings settings)
+  {
+    services.AddAuthentication(options =>
+    {
       options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
       options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    }).AddJwtBearer(options => {
-      options.TokenValidationParameters = JwtService.GetParameters(configuration);
-      options.Events = JwtService.GetEvents();
+    }).AddJwtBearer(options =>
+    {
+      var SecretKey = Encoding.UTF8.GetBytes(settings.SecretKey);
+      options.TokenValidationParameters = new TokenValidationParameters
+      {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = false,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = settings.Issuer,
+        ValidAudience = settings.Audience,
+        IssuerSigningKey = new SymmetricSecurityKey(SecretKey)
+      };
+
+      options.Events = new JwtBearerEvents
+      {
+        OnAuthenticationFailed = context => Task.FromException(new UnauthorizedAccessException("Invalid token")),
+        OnChallenge = context => Task.FromException(new UnauthorizedAccessException("Token is missing")),
+      };
     });
   }
 }
