@@ -24,9 +24,12 @@ public class PgDbContext(DbContextOptions<PgDbContext> options, IConfiguration c
 
     SetDefaultValueSQL(modelBuilder, "CreatedAt", "NOW()");
     SetDefaultValueSQL(modelBuilder, "UpdatedAt", "NOW()");
+    
 
     modelBuilder.ApplyConfiguration(new UserConfig(_configuration));
     modelBuilder.ApplyConfiguration(new RoleConfig());
+    modelBuilder.ApplyConfiguration(new ScopeConfig());
+
     modelBuilder.ApplyConfiguration(new UserRoleConfig());
     modelBuilder.ApplyConfiguration(new RoleScopeConfig());
   }
