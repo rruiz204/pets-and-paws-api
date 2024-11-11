@@ -2,20 +2,21 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Domain.Entities;
-using Domain.Services;
-using Domain.Settings;
+using Domain.Services.Jwt;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Application.Services.Jwt;
 
-public partial class JwtService(IOptions<JwtSettings> jwtSettings, IHttpContextAccessor context) : IJwtService
+public partial class JwtService(
+  IOptions<JwtSettings> jwtSettings,
+  IHttpContextAccessor contextAccessor) : IJwtService
 {
   private readonly JwtSettings _jwtSettings = jwtSettings.Value;
-  private readonly IHttpContextAccessor _context = context;
+  private readonly IHttpContextAccessor _contextAccessor = contextAccessor;
 
-  public string GenerateToken(User user)
+  public string Generate(User user)
   {
     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));
     var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -31,16 +32,14 @@ public partial class JwtService(IOptions<JwtSettings> jwtSettings, IHttpContextA
     return new JwtSecurityTokenHandler().WriteToken(token);
   }
 
-  public int? GetUserIdFromToken()
+  public int GetCurrentUser()
   {
-    var user = _context.HttpContext?.User;
+    var user = _contextAccessor.HttpContext?.User 
+      ?? throw new UnauthorizedAccessException("Token is missing");
 
-    if (user != null)
-    {
-      var userIdClaim = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-      if (int.TryParse(userIdClaim, out int userId)) return userId;
-    }
+    var userIdClaim = user.FindFirst(ClaimTypes.NameIdentifier)?.Value
+      ?? throw new UnauthorizedAccessException("Corrupted token");
     
-    return null;
+    return Convert.ToInt32(userIdClaim);
   }
 }

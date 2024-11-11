@@ -1,4 +1,4 @@
-namespace Domain.Services;
+namespace Domain.Services.Hasher;
 
 public interface IHasherService
 {
