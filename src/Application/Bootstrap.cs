@@ -29,6 +29,7 @@ public static class Bootstrap
     AddVitalServices(services);
     AddExceptionHandlers(services);
     AddJwtAuthentication(services, jwtSettings.Get<JwtSettings>()!);
+    AddAuthorizationPolicies(services);
 
     services.AddScoped<PasswordHasher<User>>();
     services.AddScoped<IHasherService, HasherService>();
@@ -80,5 +81,14 @@ public static class Bootstrap
         OnChallenge = context => Task.FromException(new UnauthorizedAccessException("Token is missing")),
       };
     });
+  }
+
+  private static void AddAuthorizationPolicies(IServiceCollection services)
+  {
+    services.AddAuthorizationBuilder()
+      .AddPolicy("Policy:PetsDirectory:Read",
+        policy => policy.RequireRole("admin", "veterinarian").RequireClaim("scope", "pets-directory:read"))
+      .AddPolicy("Policy:PetsDirectory:Create",
+        policy => policy.RequireRole("admin, veterinarian").RequireClaim("scope", "pets-directory:create"));
   }
 }
