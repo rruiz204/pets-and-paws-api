@@ -7,13 +7,20 @@ public static class Bootstrap
 {
   public static void AddPresentation(this IServiceCollection services, IConfiguration configuration)
   {
-    // === Dependency Injection
-    services.AddControllers();
+    AddVitalServices(services);
+    AddRateLimiter(services, configuration);
+    AddCors(services);
+  }
 
+  private static void AddVitalServices(IServiceCollection services)
+  {
+    services.AddControllers();
     services.AddEndpointsApiExplorer();
     services.AddSwaggerGen();
+  }
 
-    // === Rate Limiting
+  private static void AddRateLimiter(IServiceCollection services, IConfiguration configuration)
+  {
     services.AddRateLimiter(options =>
     {
       options.AddFixedWindowLimiter(policyName: "Fixed", options =>
@@ -24,8 +31,10 @@ public static class Bootstrap
         options.QueueLimit = 2;
       });
     });
+  }
 
-    // === CORS
+  private static void AddCors(IServiceCollection services)
+  {
     services.AddCors(options =>
     {
       options.AddPolicy(name: "Local", configurePolicy: policy =>
