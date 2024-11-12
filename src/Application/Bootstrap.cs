@@ -87,8 +87,8 @@ public static class Bootstrap
   {
     services.AddAuthorizationBuilder()
       .AddPolicy("Policy:PetsDirectory:Read",
-        policy => policy.RequireRole("admin", "veterinarian").RequireClaim("scope", "pets-directory:read"))
+        policy => policy.RequireClaim("charge", "admin").RequireClaim("scope", "pets-directory:read"))
       .AddPolicy("Policy:PetsDirectory:Create",
-        policy => policy.RequireRole("admin, veterinarian").RequireClaim("scope", "pets-directory:create"));
+        policy => policy.RequireClaim("charge", "admin, veterinarian").RequireClaim("scope", "pets-directory:create"));
   }
 }

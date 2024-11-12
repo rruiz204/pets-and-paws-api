@@ -22,6 +22,8 @@ public partial class JwtService(
     var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
     List<Claim> claims = [new(JwtRegisteredClaimNames.Sub, user.Id.ToString())];
+    claims.AddRange(ExtractRoles(user));
+    claims.AddRange(ExtractScopes(user));
 
     JwtSecurityToken token = new(
       issuer: _jwtSettings.Issuer,
@@ -34,12 +36,26 @@ public partial class JwtService(
 
   public int GetCurrentUser()
   {
-    var user = _contextAccessor.HttpContext?.User 
+    var user = _contextAccessor.HttpContext?.User
       ?? throw new UnauthorizedAccessException("Token is missing");
 
     var userIdClaim = user.FindFirst(ClaimTypes.NameIdentifier)?.Value
       ?? throw new UnauthorizedAccessException("Corrupted token");
-    
+
     return Convert.ToInt32(userIdClaim);
+  }
+
+  private static List<Claim> ExtractRoles(User user)
+  {
+    return user.UserRoles.Select(ur => new Claim("charge", ur.Role.Name))
+      .ToList();
+  }
+
+  private static List<Claim> ExtractScopes(User user)
+  {
+    return user.UserRoles.SelectMany(ur => ur.Role.RoleScopes)
+      .Select(rs => new Claim("scope", rs.Scope.Name))
+      .Distinct()
+      .ToList();
   }
 }
