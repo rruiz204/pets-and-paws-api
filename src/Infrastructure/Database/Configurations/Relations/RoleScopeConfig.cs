@@ -19,5 +19,16 @@ public class RoleScopeConfig : IEntityTypeConfiguration<RoleScope>
       .HasOne(rs => rs.Scope)
       .WithMany(s => s.RoleScopes)
       .HasForeignKey(rs => rs.ScopeId);
+
+    builder.HasData(
+      // Admin
+      new RoleScope { RoleId = 1, ScopeId = 1 },
+
+      // Veterinarian
+      new RoleScope { RoleId = 2, ScopeId = 2 },
+      new RoleScope { RoleId = 2, ScopeId = 3 },
+      new RoleScope { RoleId = 2, ScopeId = 4 },
+      new RoleScope { RoleId = 2, ScopeId = 5 }
+    );
   }
 }

@@ -21,7 +21,11 @@ public class UserRoleConfig : IEntityTypeConfiguration<UserRole>
       .HasForeignKey(ur => ur.RoleId);
 
     builder.HasData(
-      new UserRole { UserId = 1, RoleId = 1 }
+      // Admin
+      new UserRole { UserId = 1, RoleId = 1 },
+
+      // Tester
+      new UserRole { UserId = 2, RoleId = 2 }
     );
   }
 }
