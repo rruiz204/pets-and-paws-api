@@ -13,6 +13,7 @@ using Domain.Services.Jwt;
 using Application.Services.Jwt;
 using Domain.Services.Hasher;
 using Application.Services.Hasher;
+using Application.Policies;
 
 using Application.Exceptions;
 using Application.Exceptions.Handlers;
@@ -87,8 +88,12 @@ public static class Bootstrap
   {
     services.AddAuthorizationBuilder()
       .AddPolicy("Policy:PetsDirectory:Read",
-        policy => policy.RequireClaim("charge", "admin").RequireClaim("scope", "pets-directory:read"))
+        policy => policy.RequireClaim("charge", PetsDirectoryPolicy.Read.Roles).RequireClaim("scope", PetsDirectoryPolicy.Read.Scopes))
       .AddPolicy("Policy:PetsDirectory:Create",
-        policy => policy.RequireClaim("charge", "admin, veterinarian").RequireClaim("scope", "pets-directory:create"));
+        policy => policy.RequireClaim("charge", PetsDirectoryPolicy.Create.Roles).RequireClaim("scope", PetsDirectoryPolicy.Create.Scopes))
+      .AddPolicy("Policy:PetsDirectory:Update",
+        policy => policy.RequireClaim("charge", PetsDirectoryPolicy.Update.Roles).RequireClaim("scope", PetsDirectoryPolicy.Update.Scopes))
+      .AddPolicy("Policy:PetsDirectory:Delete",
+        policy => policy.RequireClaim("charge", PetsDirectoryPolicy.Delete.Roles).RequireClaim("scope", PetsDirectoryPolicy.Delete.Scopes));
   }
 }
