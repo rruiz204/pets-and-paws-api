@@ -9,6 +9,7 @@
 # Directories
 bin/
 obj/
+.vscode/
 
 # App Settings
 appsettings.json
