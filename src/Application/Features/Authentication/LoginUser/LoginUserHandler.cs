@@ -16,7 +16,7 @@ public class LoginUserHandler(
 
   public async Task<LoginUserResponse> Handle(LoginUserCommand command, CancellationToken cancellationToken)
   {
-    var user = await _unitOfWork.User.FindRolesAndScopes(command.Email)
+    var user = await _unitOfWork.User.Find(u => u.Email == command.Email)
       ?? throw new InvalidDataException($"User with this email does not exist.");
 
     if (!_hasher.Verify(command.Password, user.Password))
