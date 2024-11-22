@@ -11,10 +11,19 @@ public class UnitOfWork(PgDbContext context) : IUnitOfWork
   public async Task<int> SaveChangesAsync() => await _context.SaveChangesAsync();
 
   public async Task<IPgTransaction> StartTransaction()
-    => new PgTransaction(await _context.Database.BeginTransactionAsync());
+  {
+    return new PgTransaction(await _context.Database.BeginTransactionAsync());
+  }
+
 
   private IUserRepository? _user;
   public IUserRepository User => _user ??= new UserRepository(_context);
+
+  private IRoleRepository? _role;
+  public IRoleRepository Role => _role ??= new RoleRepository(_context);
+
+  private IScopeRepository? _scope;
+  public IScopeRepository Scope => _scope ??= new ScopeRepository(_context);
 
   private IResetTokenRepository? _resetToken;
   public IResetTokenRepository ResetToken => _resetToken ??= new ResetTokenRepository(_context);
