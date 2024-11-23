@@ -13,9 +13,9 @@ public class UserRepository(PgDbContext context) : GenericRepository<User>(conte
     return await dbSet.ToListAsync();
   }
 
-  public async Task<User?> FindRolesAndScopes(string email)
+  public async Task<User?> FindWithRolesAndScopes(int userId)
   {
-    return await dbSet.Where(u => u.Email == email)
+    return await dbSet.Where(u => u.Id == userId)
     .Include(u => u.UserRoles)
       .ThenInclude(ur => ur.Role)
         .ThenInclude(r => r.RoleScopes)

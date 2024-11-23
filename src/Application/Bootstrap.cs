@@ -13,6 +13,9 @@ using Domain.Services.Jwt;
 using Application.Services.Jwt;
 using Domain.Services.Hasher;
 using Application.Services.Hasher;
+
+using Domain.Services.Policy;
+using Application.Services.Policy;
 using Application.Policies;
 
 using Application.Exceptions;
@@ -27,14 +30,16 @@ public static class Bootstrap
     var jwtSettings = configuration.GetSection("JwtSettings");
     services.Configure<JwtSettings>(jwtSettings);
 
+    services.AddScoped<IHasherService, HasherService>();
+    services.AddScoped<IJwtService, JwtService>();
+    services.AddScoped<IPolicyService, PolicyService>();
+
+    services.AddScoped<PasswordHasher<User>>();
+
     AddVitalServices(services);
     AddExceptionHandlers(services);
     AddJwtAuthentication(services, jwtSettings.Get<JwtSettings>()!);
     AddAuthorizationPolicies(services);
-
-    services.AddScoped<PasswordHasher<User>>();
-    services.AddScoped<IHasherService, HasherService>();
-    services.AddScoped<IJwtService, JwtService>();
   }
 
   private static void AddVitalServices(IServiceCollection services)
@@ -86,14 +91,17 @@ public static class Bootstrap
 
   private static void AddAuthorizationPolicies(IServiceCollection services)
   {
+    var provider = services.BuildServiceProvider();
+    var service = provider.GetRequiredService<IPolicyService>();
+
     services.AddAuthorizationBuilder()
       .AddPolicy("Policy:PetsDirectory:Read",
-        policy => policy.RequireClaim("charge", PetsDirectoryPolicy.Read.Roles).RequireClaim("scope", PetsDirectoryPolicy.Read.Scopes))
+        policy => policy.RequireAssertion(async context => await service.Handle(PetsDirectoryPolicy.Read.Roles, PetsDirectoryPolicy.Read.Scopes)))
       .AddPolicy("Policy:PetsDirectory:Create",
-        policy => policy.RequireClaim("charge", PetsDirectoryPolicy.Create.Roles).RequireClaim("scope", PetsDirectoryPolicy.Create.Scopes))
+        policy => policy.RequireAssertion(async context => await service.Handle(PetsDirectoryPolicy.Create.Roles, PetsDirectoryPolicy.Create.Scopes)))
       .AddPolicy("Policy:PetsDirectory:Update",
-        policy => policy.RequireClaim("charge", PetsDirectoryPolicy.Update.Roles).RequireClaim("scope", PetsDirectoryPolicy.Update.Scopes))
+        policy => policy.RequireAssertion(async context => await service.Handle(PetsDirectoryPolicy.Update.Roles, PetsDirectoryPolicy.Update.Scopes)))
       .AddPolicy("Policy:PetsDirectory:Delete",
-        policy => policy.RequireClaim("charge", PetsDirectoryPolicy.Delete.Roles).RequireClaim("scope", PetsDirectoryPolicy.Delete.Scopes));
+        policy => policy.RequireAssertion(async context => await service.Handle(PetsDirectoryPolicy.Delete.Roles, PetsDirectoryPolicy.Delete.Scopes)));
   }
 }
